@@ -24,6 +24,10 @@ param(
     [string]$Name = "MyRevitPlugin",
 
     [Parameter()]
+    [ValidateSet("csharp", "pyrevit")]
+    [string]$Type = "csharp",
+
+    [Parameter()]
     [string]$TargetDir = (Get-Location).Path,
 
     [Parameter()]
@@ -90,12 +94,40 @@ function Invoke-Init {
 function Invoke-New {
     Show-Header
     $dest = Join-Path $TargetDir $Name
-    Write-Host "[*] Scaffolding new Revit Add-in '$Name' in: $dest" -ForegroundColor Cyan
 
     if (Test-Path $dest) {
         Write-Error "Destination directory '$dest' already exists!"
         return
     }
+
+    if ($Type -eq "pyrevit") {
+        Write-Host "[*] Scaffolding new pyRevit Extension '$Name' in: $dest" -ForegroundColor Cyan
+        $templatePath = "$RepoRoot\templates\pyRevitExtension"
+        Copy-Item $templatePath -Destination $dest -Recurse -Force
+
+        # Rename Extension folder and Tab folder
+        $extFolder = Join-Path $dest "MyExtension.extension"
+        $newExtFolder = Join-Path $dest "$Name.extension"
+        if (Test-Path $extFolder) {
+            Rename-Item $extFolder $newExtFolder
+            $tabFolder = Join-Path $newExtFolder "MyExtension.tab"
+            $newTabFolder = Join-Path $newExtFolder "$Name.tab"
+            if (Test-Path $tabFolder) {
+                Rename-Item $tabFolder $newTabFolder
+            }
+        }
+
+        # Inject AI Foundation rules into project
+        & $PSCommandPath init -TargetDir $dest
+
+        Write-Host "[OK] pyRevit Extension '$Name.extension' scaffolded successfully!" -ForegroundColor Green
+        Write-Host "    Tab: $Name.tab" -ForegroundColor White
+        Write-Host "    Panels: Automation.panel (ModelAudit, WallJoiner)" -ForegroundColor White
+        Write-Host "    Ready to test in pyRevit! Place in %APPDATA%\pyRevit\Extensions\ or use 'pyrevit extend ui'." -ForegroundColor Yellow
+        return
+    }
+
+    Write-Host "[*] Scaffolding new Revit Add-in '$Name' in: $dest" -ForegroundColor Cyan
 
     # Copy template
     $templatePath = "$RepoRoot\templates\CleanRevitAddin"
@@ -121,12 +153,12 @@ function Invoke-New {
 
 function Invoke-Validate {
     Show-Header
-    Write-Host "[*] Scanning C# files in $TargetDir for Revit API anti-patterns..." -ForegroundColor Cyan
+    Write-Host "[*] Scanning C# and Python files in $TargetDir for Revit API anti-patterns..." -ForegroundColor Cyan
 
-    $csFiles = Get-ChildItem -Path $TargetDir -Recurse -Filter *.cs -ErrorAction SilentlyContinue
+    $codeFiles = Get-ChildItem -Path $TargetDir -Recurse -Include *.cs, *.py -ErrorAction SilentlyContinue
     $issuesFound = 0
 
-    foreach ($file in $csFiles) {
+    foreach ($file in $codeFiles) {
         $content = Get-Content $file.FullName
         $lineNum = 0
 
@@ -151,8 +183,8 @@ function Invoke-Validate {
                 $issuesFound++
             }
 
-            # Check 4: Unsafe background thread execution
-            if ($line -match 'Task\.Run\(' -and $line -match 'doc\.') {
+            # Check 4: Unsafe background thread execution (C# specific)
+            if ($file.Extension -eq ".cs" -and $line -match 'Task\.Run\(' -and $line -match 'doc\.') {
                 Write-Host "  [CRITICAL] $($file.Name):$($lineNum) appears to call Revit API inside Task.Run(). Use RevitTask.RunAsync() instead!" -ForegroundColor Red
                 $issuesFound++
             }

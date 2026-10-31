@@ -17,6 +17,7 @@ Use this index to quickly locate specific technical documentation and examples. 
 | **Families & Types** | [`revit-api/family-and-types.md`](revit-api/family-and-types.md) | `FamilySymbol`, `FamilyInstance`, `IFamilyLoadOptions`, activating symbols, type vs instance |
 | **Ribbon UI & Dockable Panels** | [`revit-api/ui-ribbon-dockable.md`](revit-api/ui-ribbon-dockable.md) | `RibbonPanel`, `PushButton`, `SplitButton`, `DockablePane`, `IDockablePaneProvider`, WPF MVVM |
 | **Extensible Storage** | [`revit-api/extensible-storage.md`](revit-api/extensible-storage.md) | `SchemaBuilder`, `FieldBuilder`, `Entity`, `DataStorage`, GUID management, access permissions |
+| **pyRevit & Python Patterns** | [`revit-api/pyrevit-patterns.md`](revit-api/pyrevit-patterns.md) | pyRevit extensions, `.pushbutton`, `bundle.yaml`, `forms` dialogs, IronPython & CPython 3 |
 
 ---
 

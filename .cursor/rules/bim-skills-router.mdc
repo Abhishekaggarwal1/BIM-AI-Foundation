@@ -8,7 +8,8 @@ alwaysApply: true
 
 When fulfilling user requests, locate and read the corresponding skill file before generating code:
 
-- **Creating or scaffolding a Revit plugin:** `skills/revit-plugin-scaffold/SKILL.md`
+- **Creating or scaffolding a Revit C# plugin:** `skills/revit-plugin-scaffold/SKILL.md`
+- **Building pyRevit extensions or Python ribbon buttons:** `skills/revit-pyrevit-extension/SKILL.md`
 - **Asynchronous, thread-safe, or background tasks:** `skills/revit-external-event/SKILL.md`
 - **Reading, writing, or creating parameters & units:** `skills/revit-parameter-manager/SKILL.md`
 - **FilteredElementCollector queries & performance:** `skills/revit-element-collector/SKILL.md`

@@ -105,7 +105,8 @@ When authoring code that targets multiple Revit versions, use the standard prepr
 Do NOT guess or hallucinate API signatures. Read the specialized skill or knowledge reference file matching your task:
 
 ### Task-to-Skill Router
-* **Scaffolding a new plugin or solution:** Read [`skills/revit-plugin-scaffold/SKILL.md`](skills/revit-plugin-scaffold/SKILL.md)
+* **Scaffolding a new plugin or solution (C#):** Read [`skills/revit-plugin-scaffold/SKILL.md`](skills/revit-plugin-scaffold/SKILL.md)
+* **pyRevit extensions & Python ribbon buttons:** Read [`skills/revit-pyrevit-extension/SKILL.md`](skills/revit-pyrevit-extension/SKILL.md)
 * **Background tasks, async operations, or WPF dispatch:** Read [`skills/revit-external-event/SKILL.md`](skills/revit-external-event/SKILL.md)
 * **Reading, writing, or creating parameters & units:** Read [`skills/revit-parameter-manager/SKILL.md`](skills/revit-parameter-manager/SKILL.md)
 * **High-performance element filtering & selection:** Read [`skills/revit-element-collector/SKILL.md`](skills/revit-element-collector/SKILL.md)
@@ -118,6 +119,7 @@ Do NOT guess or hallucinate API signatures. Read the specialized skill or knowle
 * **Version breaking changes matrix:** [`knowledge/breaking-changes-matrix.md`](knowledge/breaking-changes-matrix.md)
 * **Revit threading and async architecture:** [`knowledge/revit-api/threading-and-async.md`](knowledge/revit-api/threading-and-async.md)
 * **Transactions and failure preprocessors:** [`knowledge/revit-api/transactions-and-failures.md`](knowledge/revit-api/transactions-and-failures.md)
+* **pyRevit architecture & Python patterns:** [`knowledge/revit-api/pyrevit-patterns.md`](knowledge/revit-api/pyrevit-patterns.md)
 * **Full Semantic Knowledge Index:** [`knowledge/INDEX.md`](knowledge/INDEX.md)
 
 ---

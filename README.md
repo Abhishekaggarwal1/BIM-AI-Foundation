@@ -39,11 +39,12 @@ AI Assistant:
 ## ⚡ Key Features
 
 1. **Master AI Instructions:** Root instructions (`AGENTS.md`, `CLAUDE.md`, `.cursor/rules/*.mdc`, `.github/copilot-instructions.md`) establishing non-negotiable Revit API constraints.
-2. **Modular Agent Skills (`agentskills.io` standard):** Task-specific procedural recipes that AI assistants load dynamically on-demand, reducing prompt token bloat by **85–90%**.
+2. **Modular Agent Skills (`agentskills.io` standard):** Task-specific procedural recipes that AI assistants load dynamically on-demand, reducing prompt token bloat by **85–90%**. Supports both **C# .NET Plugins** and **pyRevit Python Extensions**.
 3. **Revit 2024–2026 Version Breaking Change Matrix:** Accurate guidance on the historic .NET Framework 4.8 to .NET 8.0 migration in Revit 2025, `ElementId.Value` (Int64), and `ForgeTypeId`.
 4. **Multi-Targeted C# Project Template:** Production-tested Clean Architecture template (`templates/CleanRevitAddin`) compiling for Revit 2024, 2025, and 2026 from a single codebase via `Nice3point.Revit.Build.Tasks`.
-5. **Multi-AI Compatibility:** Instant out-of-the-box support for Claude Code, Cursor IDE, GitHub Copilot, Windsurf, and OpenAI Codex.
-6. **Developer CLI (`cli/bim-ai.ps1`):** A command-line tool to initialize existing repositories, scaffold new add-ins, and validate C# code for Revit anti-patterns.
+5. **pyRevit Extension & Python Scripting Support:** Native support for pyRevit extensions (`.extension`), tabs, panels, `.pushbutton` directories, `bundle.yaml`, and `pyrevit.forms` dialogs.
+6. **Multi-AI Compatibility:** Instant out-of-the-box support for Claude Code, Cursor IDE, GitHub Copilot, Windsurf, and OpenAI Codex.
+7. **Developer CLI (`cli/bim-ai.ps1`):** A command-line tool to initialize existing repositories, scaffold new add-ins, and validate C# code for Revit anti-patterns.
 
 ---
 
@@ -68,11 +69,12 @@ BIM-AI-Foundation/
 ├── knowledge/                         # Technical knowledge base
 │   ├── INDEX.md                       # High-density knowledge retrieval index
 │   ├── breaking-changes-matrix.md     # 2024 vs 2025 vs 2026 breaking changes matrix
-│   ├── revit-api/                     # Deep dives (threading, transactions, filters, geometry)
+│   ├── revit-api/                     # Deep dives (threading, transactions, pyrevit, geometry)
 │   ├── versions/                      # Revit 2024, 2025, 2026 specifics
 │   └── architecture/                  # Clean Architecture, MVVM, and DI
 ├── skills/                            # Agent Skills specification (agentskills.io)
-│   ├── revit-plugin-scaffold/         # Scaffolding modern multi-version addins
+│   ├── revit-plugin-scaffold/         # Scaffolding modern multi-version C# addins
+│   ├── revit-pyrevit-extension/       # pyRevit extensions, Python ribbon buttons, bundle.yaml
 │   ├── revit-external-event/          # Thread-safe async & RevitTask dispatcher
 │   ├── revit-parameter-manager/       # Parameters & ForgeTypeId conversions
 │   ├── revit-element-collector/       # High-speed FilteredElementCollector recipes

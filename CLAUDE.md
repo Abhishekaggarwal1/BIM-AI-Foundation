@@ -21,7 +21,8 @@ This repository provides a standardized foundation for developing Autodesk Revit
 
 ## Progressive Skill Retrieval
 When handling specific tasks, read the specialized skill file before writing code:
-- Plugin Scaffolding: `skills/revit-plugin-scaffold/SKILL.md`
+- Plugin Scaffolding (C#): `skills/revit-plugin-scaffold/SKILL.md`
+- pyRevit Extensions & Python: `skills/revit-pyrevit-extension/SKILL.md`
 - Async & ExternalEvents: `skills/revit-external-event/SKILL.md`
 - Parameter & Unit Management: `skills/revit-parameter-manager/SKILL.md`
 - High-Performance Filtering: `skills/revit-element-collector/SKILL.md`

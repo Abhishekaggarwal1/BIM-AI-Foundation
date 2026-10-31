@@ -1,0 +1,4 @@
+title: "Wall\nJoiner"
+tooltip: "Automatically joins intersecting walls and cleans up geometry joins."
+author: "BIM-AI-Foundation"
+context: doc-project

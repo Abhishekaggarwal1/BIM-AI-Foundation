@@ -1,0 +1,4 @@
+title: "Model\nAudit"
+tooltip: "Audits the active model for unplaced rooms, duplicate marks, and high polygon elements."
+author: "BIM-AI-Foundation"
+context: doc-project
