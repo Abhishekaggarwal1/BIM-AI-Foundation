@@ -93,26 +93,94 @@ BIM-AI-Foundation/
 
 ---
 
-## 🛠️ Quickstart
+---
+
+## 💡 How Is This Different From Other Revit AI Projects?
+
+There is a fundamental difference between **BIM-AI-Foundation** and existing tools like `revit-mcp-server` or `RevitMCPBridge`:
+
+| Feature | Runtime MCP Bridges (`revit-mcp-server`, `RevitMCPBridge`) | **BIM-AI-Foundation** (This Repository) |
+| :--- | :--- | :--- |
+| **Who is it for?** | **End-Users / BIM Modelers** | **BIM Developers & Software Engineers** |
+| **What does it do?** | Controls an already-running Revit session via chat (e.g. *"Delete wall 105"*, *"Export sheets"*). | **Builds brand new, standalone Revit plugins (`.dll`), custom ribbon buttons, and tools.** |
+| **Does Revit need to be open?** | **Yes.** Requires an open Revit instance connected via local socket or named pipe. | **No.** Works at development time in your code editor (Cursor, VS Code, Claude Code). |
+| **Can you create custom Revit buttons?** | ❌ No. Cannot create distributable compiled add-ins or Ribbon UI. | 🟢 **Yes!** Fully scaffolds Ribbon tabs, buttons, dockable palettes, and commands. |
+| **Multi-version C# compilation** | ❌ None. | 🟢 **Built-in multi-targeting for Revit 2024, 2025, and 2026** (.NET 4.8 and .NET 8.0). |
+| **Prevents AI hallucinations & crashes** | ❌ No. (Doesn't guide AI when writing plugin code). | 🟢 **Yes!** Enforces STA threading, `RevitTask`, transaction scoping, and version rules. |
+
+---
+
+## 🛠️ Step-by-Step: How to Create a Custom Revit Tool / Button
+
+If you want to build a tool or feature that Revit doesn't natively have, follow this 5-minute walkthrough:
+
+### Step 1: Scaffold your new plugin project
+Open your terminal and run:
+```powershell
+pwsh ./cli/bim-ai.ps1 new -Name "SmartWallAutomation" -TargetDir "C:\MyRevitPlugins"
+```
+This generates a complete, multi-targeted C# solution (`C:\MyRevitPlugins\SmartWallAutomation`) pre-configured for Revit 2024, 2025, and 2026, complete with Ribbon UI, dockable panel, and all AI rules pre-installed.
+
+### Step 2: Open the project in your favorite AI editor
+Open the folder `C:\MyRevitPlugins\SmartWallAutomation` in **Cursor**, **VS Code** (with GitHub Copilot), or run **Claude Code**.
+
+### Step 3: Tell your AI what button you want to build
+In your AI chat / Composer, simply prompt:
+> *"Add a new Ribbon button called 'Audit Missing Marks' under our BIM Tools tab. When clicked, it should find all doors without a Mark, assign sequential mark numbers starting from D-101, swallow any duplicate mark warnings, and show a summary TaskDialog."*
+
+### Step 4: AI writes 100% correct code without hallucination
+Because your project contains `AGENTS.md` and `skills/`, the AI assistant will automatically:
+1. Use `skills/revit-failure-handler` to suppress popup warnings.
+2. Use `skills/revit-parameter-manager` to safely write parameters without throwing exceptions.
+3. Use `skills/revit-external-event` to ensure thread-safety.
+4. Support both Revit 2024 (.NET 4.8) and Revit 2025/2026 (.NET 8.0).
+
+### Step 5: Build and run in Revit
+Press `Ctrl + Shift + B` in Visual Studio or run:
+```bash
+dotnet build
+```
+Your compiled add-in (`SmartWallAutomation.dll` and `.addin`) will be automatically placed into Revit's add-ins folder. Launch Revit, and your brand new custom button will appear in the ribbon ready to use!
+
+---
+
+## ❓ Frequently Asked Questions (FAQ)
+
+### Q: Does this repository require an active connection to Revit or the cloud?
+**No.** This is a software engineering foundation that runs locally in your code editor. Your AI coding assistant (Cursor, Claude Code, Copilot) uses this repository's instructions, skills, and templates to write accurate Revit C# code. You only launch Revit when you want to run and test your compiled add-in.
+
+### Q: Can I use this with an existing Revit plugin I already developed?
+**Yes!** Open your existing plugin folder and run:
+```powershell
+pwsh ./cli/bim-ai.ps1 init -TargetDir "C:\Path\To\Your\ExistingPlugin"
+```
+This injects `AGENTS.md`, `.cursor/rules/`, and the skills catalog into your existing repository so AI assistants immediately follow Revit best practices.
+
+### Q: Can I validate my existing C# code for Revit bugs?
+**Yes!** Run:
+```powershell
+pwsh ./cli/bim-ai.ps1 validate -TargetDir "C:\Path\To\Your\ExistingPlugin"
+```
+It will scan your code and warn you about obsolete APIs (`ElementId.IntegerValue`), deprecated parameter types, or unsafe thread calls (`Task.Run`).
+
+---
+
+## 🛠️ CLI Quickstart Reference
 
 ### Option A: Scaffold a Brand New Multi-Version Plugin
 ```powershell
-# In PowerShell:
 pwsh ./cli/bim-ai.ps1 new -Name "MyCoolAddin" -TargetDir "C:\Projects"
 ```
-This generates a complete, compile-ready multi-targeted solution for Revit 2024, 2025, and 2026 with all AI rules and skills pre-installed.
 
 ### Option B: Inject AI Rules into an Existing Plugin Repository
 ```powershell
 pwsh ./cli/bim-ai.ps1 init -TargetDir "C:\MyExistingPlugin"
 ```
-Immediately equips your existing repository with `AGENTS.md`, `CLAUDE.md`, `.cursor/rules/`, and the BIM skills catalog.
 
 ### Option C: Validate an Existing Codebase for Revit Anti-Patterns
 ```powershell
 pwsh ./cli/bim-ai.ps1 validate -TargetDir "C:\MyExistingPlugin"
 ```
-Scans your C# code for deprecated `ElementId.IntegerValue`, obsolete `ParameterType`, and dangerous un-dispatched `Task.Run()` calls.
 
 ---
 
