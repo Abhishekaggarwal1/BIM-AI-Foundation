@@ -1,0 +1,35 @@
+---
+description: Multi-version rules and breaking changes across Revit 2024, 2025, and 2026 (.NET Framework vs .NET 8)
+globs: **/*.cs, **/*.csproj, **/*.addin
+alwaysApply: true
+---
+
+# Revit Multi-Version & Target Framework Rules
+
+## Target Frameworks
+- **Revit 2024:** `net48` (.NET Framework 4.8). Requires Windows Desktop targets.
+- **Revit 2025:** `net8.0-windows` (.NET 8.0). SDK-style project required. Uses `AssemblyLoadContext`.
+- **Revit 2026:** `net8.0-windows` (.NET 8.0).
+
+## Preprocessor Symbols
+Use preprocessor flags from `Nice3point.Revit.Build.Tasks`:
+```csharp
+#if REVIT2025_OR_GREATER
+    // .NET 8 / Revit 2025+ implementation
+    Parameter p = element.FindParameter(BuiltInParameter.ALL_MODEL_MARK);
+#else
+    // Legacy Revit 2024 (.NET 4.8) implementation
+    Parameter p = element.get_Parameter(BuiltInParameter.ALL_MODEL_MARK);
+#endif
+```
+
+## Critical Breaking Changes
+1. **.NET 8 Migration in 2025:**
+   - Add-ins must target `net8.0-windows`.
+   - Assembly resolution changes: dependencies must be isolated or embedded to avoid conflicting versions.
+2. **ElementId.Value:**
+   - 2024+ uses `long` for IDs. Legacy code converting to `int` causes overflow errors on large models.
+3. **Parameter Lookups:**
+   - Use `Element.FindParameter()` on Revit 2025+ instead of deprecated lookup methods.
+4. **Context Menus:**
+   - Revit 2025+ supports `RegisterContextMenu` on the active UI application.

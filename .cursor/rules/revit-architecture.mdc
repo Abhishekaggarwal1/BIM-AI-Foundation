@@ -1,0 +1,42 @@
+---
+description: Clean Architecture, MVVM with CommunityToolkit, Dependency Injection, and Command patterns for Revit add-ins
+globs: **/*.cs, **/*.xaml
+alwaysApply: false
+---
+
+# Revit Clean Architecture & MVVM Guidelines
+
+## Command Pattern
+- Always annotate commands:
+  ```csharp
+  [Transaction(TransactionMode.Manual)]
+  [Regeneration(RegenerationOption.Manual)]
+  public class SampleCommand : IExternalCommand
+  {
+      public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+      {
+          try
+          {
+              // Command logic
+              return Result.Succeeded;
+          }
+          catch (Exception ex)
+          {
+              message = ex.Message;
+              return Result.Failed;
+          }
+      }
+  }
+  ```
+
+## MVVM Pattern
+- Use `CommunityToolkit.Mvvm` (`ObservableObject`, `[ObservableProperty]`, `[RelayCommand]`).
+- The ViewModel must NOT reference Revit API classes directly if possible; keep business logic clean.
+- In ViewModels, dispatch Revit API writes through `RevitTask.RunAsync(() => { ... })`.
+
+## Window Ownership
+- Modeless windows must set their owner to Revit's main window handle to prevent getting hidden behind Revit:
+  ```csharp
+  var helper = new System.Windows.Interop.WindowInteropHelper(window);
+  helper.Owner = Autodesk.Windows.ComponentManager.ApplicationWindow;
+  ```

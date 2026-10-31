@@ -1,0 +1,19 @@
+# Auto-detect text files and normalize line endings
+* text=auto
+
+# C# and .NET Source
+*.cs text diff=csharp
+*.csproj text merge=union
+*.sln text eol=crlf
+*.addin text eol=crlf
+*.xaml text
+
+# Shell & Scripts
+*.sh text eol=lf
+*.ps1 text eol=crlf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+
+# Markdown & Documentation
+*.md text
+*.mdc text

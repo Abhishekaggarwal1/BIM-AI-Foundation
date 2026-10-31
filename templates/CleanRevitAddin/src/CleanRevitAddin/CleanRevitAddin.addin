@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>CleanRevitAddin</Name>
+    <Assembly>CleanRevitAddin.dll</Assembly>
+    <AddInId>8F3E5A2B-7D1C-4E9A-B0F2-6C8E4A1D9B3C</AddInId>
+    <FullClassName>CleanRevitAddin.App</FullClassName>
+    <VendorId>BIMFoundation</VendorId>
+    <VendorDescription>BIM-AI-Foundation Open-Source Initiative</VendorDescription>
+  </AddIn>
+</RevitAddIns>

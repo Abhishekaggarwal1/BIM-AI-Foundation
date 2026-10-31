@@ -1,0 +1,21 @@
+---
+description: Progressive disclosure router directing the AI to specialized BIM skills based on user intent
+globs: **/*
+alwaysApply: true
+---
+
+# BIM Skill Router (Progressive Retrieval)
+
+When fulfilling user requests, locate and read the corresponding skill file before generating code:
+
+- **Creating or scaffolding a Revit plugin:** `skills/revit-plugin-scaffold/SKILL.md`
+- **Asynchronous, thread-safe, or background tasks:** `skills/revit-external-event/SKILL.md`
+- **Reading, writing, or creating parameters & units:** `skills/revit-parameter-manager/SKILL.md`
+- **FilteredElementCollector queries & performance:** `skills/revit-element-collector/SKILL.md`
+- **Geometry, solid booleans, ray casting, intersections:** `skills/revit-geometry-analysis/SKILL.md`
+- **Suppressing warning popups & failure preprocessors:** `skills/revit-failure-handler/SKILL.md`
+- **Model QA/QC audits & rule validation:** `skills/revit-model-validation/SKILL.md`
+- **Dockable panels, palettes, WPF MVVM UI:** `skills/revit-dockable-panel/SKILL.md`
+- **Version differences (2024 vs 2025 vs 2026):** `knowledge/breaking-changes-matrix.md`
+
+Do NOT load entire knowledge bases unless explicitly requested; read only the relevant skill to minimize token usage.

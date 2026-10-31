@@ -1,0 +1,32 @@
+---
+description: Critical Revit API core invariants including STA threading, transactions, units, ElementId, and collectors
+globs: **/*.cs, **/*.xaml, **/*.csproj
+alwaysApply: true
+---
+
+# Revit API Core Rules & Invariants
+
+## 1. Single-Threaded Apartment (STA) Constraint
+- The Revit API can ONLY be called from Revit's main thread.
+- Never call Revit methods inside `Task.Run()`, background threads, or timers.
+- To execute from a modeless WPF window or background process, dispatch through `ExternalEvent` or `RevitTask`.
+
+## 2. Transactions
+- Every model modification must be wrapped in `using (var t = new Transaction(doc, "Name")) { t.Start(); ... t.Commit(); }`.
+- Never show modal dialogs while a transaction is open.
+- Read operations must be performed without opening a transaction.
+
+## 3. ElementId (Int64)
+- Revit 2024+ deprecated `ElementId.IntegerValue`.
+- ALWAYS use `element.Id.Value` (which returns `long`).
+- Construct new IDs using `new ElementId(longValue)`.
+
+## 4. ForgeTypeId & UnitUtils
+- `ParameterType`, `DisplayUnitType`, and `UnitType` enums are obsolete.
+- Use `ForgeTypeId` via `SpecTypeId.*` for specs and `UnitTypeId.*` for units.
+- Always use `UnitUtils.ConvertFromInternalUnits()` and `UnitUtils.ConvertToInternalUnits()`.
+- Revit internal units: Length = decimal feet, Area = square feet, Angle = radians.
+
+## 5. FilteredElementCollector
+- Always apply quick filters (`OfClass`, `OfCategory`, `WhereElementIsNotElementType`) first.
+- Avoid early LINQ enumeration (`.ToList()`, `.Where()`) before native Revit filtering.

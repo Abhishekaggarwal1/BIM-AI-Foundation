@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <Configurations>Debug;Release;Release R24;Release R25;Release R26</Configurations>
+    <AssemblyName>CleanRevitAddin</AssemblyName>
+    <RootNamespace>CleanRevitAddin</RootNamespace>
+  </PropertyGroup>
+
+  <!-- Revit 2024 (.NET Framework 4.8) -->
+  <PropertyGroup Condition="$(Configuration.Contains('R24'))">
+    <TargetFramework>net48</TargetFramework>
+    <DefineConstants>REVIT2024</DefineConstants>
+    <RevitVersion>2024</RevitVersion>
+  </PropertyGroup>
+
+  <!-- Revit 2025 (.NET 8.0) -->
+  <PropertyGroup Condition="$(Configuration.Contains('R25'))">
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <DefineConstants>REVIT2025;REVIT2025_OR_GREATER;NET8_0_OR_GREATER</DefineConstants>
+    <RevitVersion>2025</RevitVersion>
+  </PropertyGroup>
+
+  <!-- Revit 2026 (.NET 8.0) -->
+  <PropertyGroup Condition="$(Configuration.Contains('R26'))">
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <DefineConstants>REVIT2026;REVIT2025_OR_GREATER;REVIT2026_OR_GREATER;NET8_0_OR_GREATER</DefineConstants>
+    <RevitVersion>2026</RevitVersion>
+  </PropertyGroup>
+
+  <!-- Fallback Default -->
+  <PropertyGroup Condition="!$(Configuration.Contains('R24')) and !$(Configuration.Contains('R25')) and !$(Configuration.Contains('R26'))">
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <DefineConstants>REVIT2025;REVIT2025_OR_GREATER;NET8_0_OR_GREATER</DefineConstants>
+    <RevitVersion>2025</RevitVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Nice3point.Revit.Build.Tasks" Version="2.0.*" />
+    <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*" />
+    <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.*" />
+  </ItemGroup>
+
+</Project>

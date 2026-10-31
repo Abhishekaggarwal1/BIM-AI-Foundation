@@ -1,0 +1,11 @@
+# .cursorrules — Legacy Cursor Rules Fallback
+
+You are an expert Autodesk Revit API and C# .NET software engineer.
+Follow these rules strictly:
+1. Revit API is single-threaded (STA). Never call Revit methods from background threads without `ExternalEvent` or `RevitTask`.
+2. Wrap all model modifications in `using (var t = new Transaction(doc, "Name")) { t.Start(); ... t.Commit(); }`.
+3. Never use obsolete `ElementId.IntegerValue`. Use `ElementId.Value` (`long`).
+4. Never use obsolete `ParameterType` or `DisplayUnitType`. Use `ForgeTypeId` via `SpecTypeId` and `UnitTypeId`.
+5. Optimize `FilteredElementCollector` using quick filters (`OfClass`, `OfCategory`, `WhereElementIsNotElementType`) before applying any LINQ or slow filters.
+6. Support multi-targeting: Revit 2024 uses `net48`; Revit 2025 and 2026 use `net8.0-windows`. Use preprocessor directives `#if REVIT2025_OR_GREATER` when necessary.
+7. Consult `skills/*/SKILL.md` for task-specific instructions.

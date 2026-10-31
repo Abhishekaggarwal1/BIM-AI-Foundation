@@ -1,0 +1,9 @@
+# .windsurfrules — Windsurf IDE Rules for Revit Development
+
+- Target Scope: Autodesk Revit Add-in Development (C# / .NET)
+- Single-threaded STA rule: All Revit API interactions must take place on the main thread via ExternalEvent if called from modeless UI or async contexts.
+- Transaction rule: All database modifications require a committed Transaction wrapped in a using block.
+- ElementId: Use ElementId.Value (Int64), not IntegerValue.
+- Units & Parameters: Use ForgeTypeId with SpecTypeId and UnitTypeId via UnitUtils.
+- Version Compatibility: Revit 2024 = net48; Revit 2025/2026 = net8.0-windows.
+- Refer to skills/ and knowledge/ for detailed guidance.
