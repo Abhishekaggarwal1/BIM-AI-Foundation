@@ -1,231 +1,247 @@
 # BIM-AI-Foundation
+### An Open-Source Engineering & Knowledge Framework for AI-Assisted BIM Software Development
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Revit: 2024-2026](https://img.shields.io/badge/Autodesk%20Revit-2024%20%7C%202025%20%7C%202026-blue.svg)](https://www.autodesk.com/products/revit)
-[![.NET: 4.8 | 8.0](https://img.shields.io/badge/.NET-Framework%204.8%20%7C%208.0-purple.svg)](https://dotnet.microsoft.com/)
-[![Standard: AGENTS.md](https://img.shields.io/badge/Standard-AGENTS.md%20%7C%20Agent%20Skills-green.svg)](https://agentskills.io)
-
-**BIM-AI-Foundation** is an open-source development and knowledge framework for AI-assisted Building Information Modeling (BIM) software development.
-
-It eliminates the need for developers to repeatedly explain BIM concepts, Revit API quirks, threading models, transaction lifecycles, and version breaking changes to AI coding assistants (Claude Code, Cursor, GitHub Copilot, OpenAI Codex, Antigravity) every time they build a new plugin.
+[![Autodesk Revit](https://img.shields.io/badge/Autodesk%20Revit-2024%20%7C%202025%20%7C%202026-blue.svg)](https://www.autodesk.com/products/revit)
+[![.NET Runtime](https://img.shields.io/badge/.NET-Framework%204.8%20%7C%208.0%20(Core)-purple.svg)](https://dotnet.microsoft.com/)
+[![pyRevit](https://img.shields.io/badge/pyRevit-4.8%2B%20(Python%202.7%20%2F%203.x)-orange.svg)](https://github.com/eirannejad/pyRevit)
+[![Standard](https://img.shields.io/badge/Standard-AGENTS.md%20%7C%20Agent%20Skills-green.svg)](https://agentskills.io)
 
 ---
 
-## 🚀 The Problem & The Solution
+## Executive Overview
 
+**BIM-AI-Foundation** is an open-source development and knowledge framework engineered to provide AI coding assistants (Claude Code, Cursor IDE, GitHub Copilot, OpenAI Codex, Windsurf, Antigravity) with authoritative domain intelligence for Autodesk Revit software engineering.
+
+Building software for Building Information Modeling (BIM) platforms requires strict adherence to complex API invariants:
+- **Thread Safety:** Single-Threaded Apartment (STA) main UI thread isolation.
+- **Database Integrity:** Scoped transactions, transaction groups, and failure preprocessing.
+- **Version Transitions:** The major architectural migration from .NET Framework 4.8 (Revit 2024) to .NET 8.0 Core (Revit 2025/2026).
+- **Type Evolution:** 64-bit `ElementId.Value` (`long`) and `ForgeTypeId` parameter/unit standards.
+
+Without specialized context, standard LLMs regularly generate code that triggers fatal application crashes, memory leaks, or compilation failures. **BIM-AI-Foundation** bridges this domain gap by providing structured rules, dynamic agent skills, and production templates that guide AI models to write correct, high-performance C# and Python code on the first attempt.
+
+---
+
+## Core Capabilities
+
+```mermaid
+flowchart TD
+    subgraph MultiAI ["Supported AI Coding Environments"]
+        A1["Cursor IDE (.cursor/rules)"]
+        A2["Claude Code (CLAUDE.md)"]
+        A3["GitHub Copilot (.github/)"]
+        A4["Universal AGENTS.md (AAIF)"]
+    end
+
+    subgraph CoreEngine ["BIM-AI-Foundation Framework"]
+        B1["Master Architectural Invariants<br/>(STA Threading, Transactions, Units)"]
+        B2["Breaking Changes Knowledge Base<br/>(Revit 2024, 2025, 2026)"]
+        B3["Progressive Agent Skills Router<br/>(agentskills.io Standard)"]
+    end
+
+    subgraph Targets ["Development Targets"]
+        C1["Compiled C# .NET Add-ins<br/>(Multi-targeted net48 & net8.0-windows)"]
+        C2["pyRevit Python Extensions<br/>(Ribbon Tabs, Panels & Pushbuttons)"]
+    end
+
+    MultiAI --> CoreEngine
+    CoreEngine --> Targets
 ```
-THE CURRENT STRUGGLE (WITHOUT FOUNDATION):
-Developer: "Create a Revit plugin to audit unplaced rooms"
-AI Assistant:
- ❌ Calls Revit API from Task.Run()            --> HARD REVIT CRASH (STA Thread Violation)
- ❌ Forgets to wrap in using (Transaction)     --> DATABASE LOCK / CRASH
- ❌ Uses obsolete ElementId.IntegerValue        --> OVERFLOW ERROR on large projects
- ❌ Uses deprecated ParameterType enum          --> COMPILATION FAILURE in Revit 2024+
- ❌ Targets .NET 4.8 for Revit 2025            --> DLL FAILS TO LOAD (Revit 2025 runs .NET 8)
- Token Cost: 80,000+ tokens spent debugging and pasting documentation.
 
-WITH BIM-AI-FOUNDATION:
-Developer clones or installs BIM-AI-Foundation.
-AI Assistant:
- ✔ Reads AGENTS.md and relevant skills/ on demand (< 3,000 tokens)
- ✔ Strictly respects the Single-Threaded Apartment (STA) model via RevitTask
- ✔ Scopes Transactions cleanly with IFailuresPreprocessor warning swallowers
- ✔ Correctly targets .NET Framework 4.8 (Revit 2024) and .NET 8.0 (Revit 2025-2026)
- ✔ Generates clean, production-grade, compile-ready code on the FIRST turn!
-```
+* **Deterministic Architectural Guidance:** Eliminates LLM hallucinations around Revit STA threading, transaction lifetimes, and warning popups.
+* **Dual-Language Ecosystem:** Native, first-class support for both compiled **C# (.NET)** plugins and interpreted **Python (pyRevit)** extensions.
+* **Multi-Version Cross-Compilation:** A unified C# project structure that compiles natively for Revit 2024 (.NET Framework 4.8), Revit 2025 (.NET 8.0), and Revit 2026 (.NET 8.0) from a single codebase.
+* **Progressive Disclosure Skills:** Modular, on-demand agent skills adhering to the [agentskills.io](https://agentskills.io) standard, reducing AI context overhead by up to 90%.
+* **Developer Tooling CLI:** A cross-platform PowerShell utility (`cli/bim-ai.ps1`) to scaffold add-ins, inject rules into existing projects, and statically validate codebases for Revit API anti-patterns.
 
 ---
 
-## ⚡ Key Features
-
-1. **Master AI Instructions:** Root instructions (`AGENTS.md`, `CLAUDE.md`, `.cursor/rules/*.mdc`, `.github/copilot-instructions.md`) establishing non-negotiable Revit API constraints.
-2. **Modular Agent Skills (`agentskills.io` standard):** Task-specific procedural recipes that AI assistants load dynamically on-demand, reducing prompt token bloat by **85–90%**. Supports both **C# .NET Plugins** and **pyRevit Python Extensions**.
-3. **Revit 2024–2026 Version Breaking Change Matrix:** Accurate guidance on the historic .NET Framework 4.8 to .NET 8.0 migration in Revit 2025, `ElementId.Value` (Int64), and `ForgeTypeId`.
-4. **Multi-Targeted C# Project Template:** Production-tested Clean Architecture template (`templates/CleanRevitAddin`) compiling for Revit 2024, 2025, and 2026 from a single codebase via `Nice3point.Revit.Build.Tasks`.
-5. **pyRevit Extension & Python Scripting Support:** Native support for pyRevit extensions (`.extension`), tabs, panels, `.pushbutton` directories, `bundle.yaml`, and `pyrevit.forms` dialogs.
-6. **Multi-AI Compatibility:** Instant out-of-the-box support for Claude Code, Cursor IDE, GitHub Copilot, Windsurf, and OpenAI Codex.
-7. **Developer CLI (`cli/bim-ai.ps1`):** A command-line tool to initialize existing repositories, scaffold new add-ins, and validate C# code for Revit anti-patterns.
-
----
-
-## 📂 Repository Structure
+## Repository Architecture
 
 ```text
 BIM-AI-Foundation/
-├── AGENTS.md                          # Primary open standard master instructions
-├── CLAUDE.md                          # Claude Code instructions
-├── .cursorrules                       # Legacy Cursor instructions fallback
-├── .windsurfrules                     # Windsurf IDE instructions
-├── .cursor/rules/                     # Modern Cursor modular rules (.mdc)
-│   ├── revit-core.mdc                 # Core STA threading & transaction invariants
-│   ├── revit-versions.mdc             # Version-specific guidelines (.NET 4.8 vs .NET 8)
-│   ├── revit-architecture.mdc         # Clean Architecture & MVVM guidelines
-│   └── bim-skills-router.mdc          # Progressive disclosure skill router
+├── AGENTS.md                          # Open-standard master AI rules (AAIF standard)
+├── CLAUDE.md                          # Claude Code CLI configuration
+├── .cursorrules                       # Cursor IDE root rules
+├── .windsurfrules                     # Windsurf IDE configuration
+├── .cursor/rules/                     # Modular Cursor rules (.mdc)
+│   ├── revit-core.mdc                 # Threading and database transaction invariants
+│   ├── revit-versions.mdc             # Version-specific compilation (.NET 4.8 vs .NET 8)
+│   ├── revit-architecture.mdc         # Clean Architecture & MVVM design patterns
+│   └── bim-skills-router.mdc          # Dynamic skill dispatch router
 ├── .github/copilot-instructions.md    # GitHub Copilot workspace instructions
-├── docs/                              # Framework documentation
-│   ├── ARCHITECTURE.md                # System design & how AI integration works
-│   ├── TOKEN_OPTIMIZATION.md          # Benchmark & token reduction report
-│   └── MULTI_AI_GUIDE.md              # How to configure Cursor, Claude Code, Copilot
-├── knowledge/                         # Technical knowledge base
+├── knowledge/                         # Technical knowledge repository
 │   ├── INDEX.md                       # High-density knowledge retrieval index
-│   ├── breaking-changes-matrix.md     # 2024 vs 2025 vs 2026 breaking changes matrix
-│   ├── revit-api/                     # Deep dives (threading, transactions, pyrevit, geometry)
-│   ├── versions/                      # Revit 2024, 2025, 2026 specifics
-│   └── architecture/                  # Clean Architecture, MVVM, and DI
-├── skills/                            # Agent Skills specification (agentskills.io)
-│   ├── revit-plugin-scaffold/         # Scaffolding modern multi-version C# addins
-│   ├── revit-pyrevit-extension/       # pyRevit extensions, Python ribbon buttons, bundle.yaml
-│   ├── revit-external-event/          # Thread-safe async & RevitTask dispatcher
-│   ├── revit-parameter-manager/       # Parameters & ForgeTypeId conversions
-│   ├── revit-element-collector/       # High-speed FilteredElementCollector recipes
-│   ├── revit-geometry-analysis/       # Solids, boolean intersections, ray casting
+│   ├── breaking-changes-matrix.md     # Comparative API matrix (2024 vs 2025 vs 2026)
+│   ├── revit-api/                     # Deep technical references (Threading, Geometry, pyRevit)
+│   ├── versions/                      # Version-specific API guides (2024, 2025, 2026)
+│   └── architecture/                  # Clean Architecture, MVVM, and Dependency Injection
+├── skills/                            # On-demand Agent Skills (agentskills.io standard)
+│   ├── revit-plugin-scaffold/         # Multi-version C# add-in scaffolding
+│   ├── revit-pyrevit-extension/       # pyRevit extensions, buttons (.pushbutton) & bundle.yaml
+│   ├── revit-external-event/          # Async dispatching & RevitTask completion sources
+│   ├── revit-parameter-manager/       # ForgeTypeId, SpecTypeId & unit conversion
+│   ├── revit-element-collector/       # High-performance FilteredElementCollector recipes
+│   ├── revit-geometry-analysis/       # Solids, Boolean operations & ray casting
 │   ├── revit-failure-handler/         # Warning suppression & IFailuresPreprocessor
-│   ├── revit-model-validation/        # Model health audits & QA/QC checkers
-│   └── revit-dockable-panel/          # Dockable panels & WPF MVVM palettes
-├── templates/                         # Tested C# project templates
-│   └── CleanRevitAddin/               # Complete solution targeting Revit 2024-2026
-├── cli/                               # Framework installer and plugin generator CLI
-│   ├── bim-ai.ps1                     # PowerShell cross-platform CLI tool
-│   ├── bim-ai.sh                      # Bash CLI wrapper
-│   └── bim-ai.cmd                     # Windows batch runner
+│   ├── revit-model-validation/        # Model audits & QA/QC validation routines
+│   └── revit-dockable-panel/          # Custom dockable panels & WPF MVVM palettes
+├── templates/                         # Production-ready starting templates
+│   ├── CleanRevitAddin/               # Multi-version C# solution (Revit 2024–2026)
+│   └── pyRevitExtension/              # Modular pyRevit extension bundle with pushbuttons
+├── cli/                               # Automation & developer CLI
+│   ├── bim-ai.ps1                     # PowerShell core CLI
+│   ├── bim-ai.sh                      # Unix/Bash wrapper
+│   └── bim-ai.cmd                     # Windows batch wrapper
+├── docs/                              # Framework documentation
+│   ├── ARCHITECTURE.md                # Structural system design
+│   ├── MULTI_AI_GUIDE.md              # Multi-AI editor configuration guide
+│   └── TOKEN_OPTIMIZATION.md          # Context token optimization benchmarks
 ├── CONTRIBUTING.md                    # Contribution guidelines
 ├── LICENSE                            # MIT License
-└── README.md
+└── README.md                          # Repository documentation
 ```
 
 ---
 
----
+## Agent Skills Catalog
 
-## 💡 How Is This Different From Other Revit AI Projects?
+Agent skills provide AI assistants with procedural workflows, reusable source implementations, and API signatures on demand:
 
-There is a fundamental difference between **BIM-AI-Foundation** and existing tools like `revit-mcp-server` or `RevitMCPBridge`:
-
-| Feature | Runtime MCP Bridges (`revit-mcp-server`, `RevitMCPBridge`) | **BIM-AI-Foundation** (This Repository) |
+| Skill | Primary Scope | Provided Assets |
 | :--- | :--- | :--- |
-| **Who is it for?** | **End-Users / BIM Modelers** | **BIM Developers & Software Engineers** |
-| **What does it do?** | Controls an already-running Revit session via chat (e.g. *"Delete wall 105"*, *"Export sheets"*). | **Builds brand new, standalone Revit plugins (`.dll`), custom ribbon buttons, and tools.** |
-| **Does Revit need to be open?** | **Yes.** Requires an open Revit instance connected via local socket or named pipe. | **No.** Works at development time in your code editor (Cursor, VS Code, Claude Code). |
-| **Can you create custom Revit buttons?** | ❌ No. Cannot create distributable compiled add-ins or Ribbon UI. | 🟢 **Yes!** Fully scaffolds Ribbon tabs, buttons, dockable palettes, and commands. |
-| **Multi-version C# compilation** | ❌ None. | 🟢 **Built-in multi-targeting for Revit 2024, 2025, and 2026** (.NET 4.8 and .NET 8.0). |
-| **Prevents AI hallucinations & crashes** | ❌ No. (Doesn't guide AI when writing plugin code). | 🟢 **Yes!** Enforces STA threading, `RevitTask`, transaction scoping, and version rules. |
+| **`revit-plugin-scaffold`** | Scaffolds multi-targeted C# add-ins with SDK-style `.csproj`. | SDK `.csproj`, `.addin` manifest, multi-target build tasks. |
+| **`revit-pyrevit-extension`** | Creates pyRevit extensions, custom Ribbon buttons, and UI. | Folder hierarchy, `bundle.yaml`, `script.py` templates. |
+| **`revit-external-event`** | Dispatches non-blocking async and WPF actions to Revit's STA thread. | `RevitTask.cs`, `ExternalEventWrapper.cs`. |
+| **`revit-parameter-manager`** | High-performance, type-safe parameter manipulation using `ForgeTypeId`. | `ParameterExtensions.cs`. |
+| **`revit-element-collector`** | Fast element filtering using native C++ quick filters. | `CollectorExtensions.cs`. |
+| **`revit-geometry-analysis`** | Solid geometry evaluation, boolean intersections, and ray casting. | `GeometryUtils.cs`. |
+| **`revit-failure-handler`** | Automatic warning suppression and transaction failure preprocessors. | `WarningSwallower.cs`, `FailureHandlers.cs`. |
+| **`revit-model-validation`** | Comprehensive model health checks and automated QA/QC routines. | `ModelValidator.cs`. |
+| **`revit-dockable-panel`** | Custom dockable panels and palettes with WPF MVVM. | `DockablePanelTemplate.xaml`, ViewModels. |
 
 ---
 
-## 🛠️ Step-by-Step: How to Create a Custom Revit Tool / Button
+## Developer Quickstart
 
-If you want to build a tool or feature that Revit doesn't natively have, follow this 5-minute walkthrough:
+### 1. Scaffolding a New C# .NET Add-in (Revit 2024–2026)
 
-### Step 1: Scaffold your new plugin project
-Open your terminal and run:
+Generate a production-ready, multi-targeted C# solution pre-configured with Clean Architecture and all AI instructions:
+
 ```powershell
-pwsh ./cli/bim-ai.ps1 new -Name "SmartWallAutomation" -TargetDir "C:\MyRevitPlugins"
+pwsh ./cli/bim-ai.ps1 new -Name "SmartClashAutomation" -Type "csharp" -TargetDir "C:\Projects"
 ```
-This generates a complete, multi-targeted C# solution (`C:\MyRevitPlugins\SmartWallAutomation`) pre-configured for Revit 2024, 2025, and 2026, complete with Ribbon UI, dockable panel, and all AI rules pre-installed.
 
-### Step 2: Open the project in your favorite AI editor
-Open the folder `C:\MyRevitPlugins\SmartWallAutomation` in **Cursor**, **VS Code** (with GitHub Copilot), or run **Claude Code**.
-
-### Step 3: Tell your AI what button you want to build
-In your AI chat / Composer, simply prompt:
-> *"Add a new Ribbon button called 'Audit Missing Marks' under our BIM Tools tab. When clicked, it should find all doors without a Mark, assign sequential mark numbers starting from D-101, swallow any duplicate mark warnings, and show a summary TaskDialog."*
-
-### Step 4: AI writes 100% correct code without hallucination
-Because your project contains `AGENTS.md` and `skills/`, the AI assistant will automatically:
-1. Use `skills/revit-failure-handler` to suppress popup warnings.
-2. Use `skills/revit-parameter-manager` to safely write parameters without throwing exceptions.
-3. Use `skills/revit-external-event` to ensure thread-safety.
-4. Support both Revit 2024 (.NET 4.8) and Revit 2025/2026 (.NET 8.0).
-
-### Step 5: Build and run in Revit
-Press `Ctrl + Shift + B` in Visual Studio or run:
+Open the scaffolded directory in **Cursor**, **VS Code**, or **Visual Studio**:
 ```bash
-dotnet build
+# Build across all target versions:
+dotnet build C:\Projects\SmartClashAutomation\SmartClashAutomation.sln
+
+# Target a specific Revit release:
+dotnet build -f net48 -c "Release R24"          # Revit 2024 (.NET Framework 4.8)
+dotnet build -f net8.0-windows -c "Release R25" # Revit 2025 (.NET 8.0)
+dotnet build -f net8.0-windows -c "Release R26" # Revit 2026 (.NET 8.0)
 ```
-Your compiled add-in (`SmartWallAutomation.dll` and `.addin`) will be automatically placed into Revit's add-ins folder. Launch Revit, and your brand new custom button will appear in the ribbon ready to use!
 
 ---
 
-## ❓ Frequently Asked Questions (FAQ)
+### 2. Scaffolding a pyRevit Python Extension
 
-### Q: Does this repository require an active connection to Revit or the cloud?
-**No.** This is a software engineering foundation that runs locally in your code editor. Your AI coding assistant (Cursor, Claude Code, Copilot) uses this repository's instructions, skills, and templates to write accurate Revit C# code. You only launch Revit when you want to run and test your compiled add-in.
+Generate a turnkey pyRevit extension configured with standard ribbon tabs, panels, and pushbuttons:
 
-### Q: Can I use this with an existing Revit plugin I already developed?
-**Yes!** Open your existing plugin folder and run:
 ```powershell
-pwsh ./cli/bim-ai.ps1 init -TargetDir "C:\Path\To\Your\ExistingPlugin"
+pwsh ./cli/bim-ai.ps1 new -Name "CustomBimTools" -Type "pyrevit" -TargetDir "C:\Projects"
 ```
-This injects `AGENTS.md`, `.cursor/rules/`, and the skills catalog into your existing repository so AI assistants immediately follow Revit best practices.
 
-### Q: Can I validate my existing C# code for Revit bugs?
-**Yes!** Run:
+1. Deploy to pyRevit via CLI:
+   ```bash
+   pyrevit extend ui CustomBimTools "C:\Projects"
+   ```
+2. Or copy the `CustomBimTools.extension` directory directly into `%APPDATA%\pyRevit\Extensions\`.
+3. Click **Reload** in Revit's pyRevit tab to activate your custom ribbon buttons.
+
+---
+
+### 3. Integrating with Existing Repositories
+
+To equip an existing Revit add-in or pyRevit project with BIM-AI-Foundation instructions and skills:
+
 ```powershell
-pwsh ./cli/bim-ai.ps1 validate -TargetDir "C:\Path\To\Your\ExistingPlugin"
+pwsh ./cli/bim-ai.ps1 init -TargetDir "C:\Path\To\Your\ExistingProject"
 ```
-It will scan your code and warn you about obsolete APIs (`ElementId.IntegerValue`), deprecated parameter types, or unsafe thread calls (`Task.Run`).
+
+This injects `AGENTS.md`, `.cursor/rules/`, `.github/copilot-instructions.md`, and the `skills/` catalog directly into your workspace.
 
 ---
 
-## 🛠️ CLI Quickstart Reference
+### 4. Codebase Static Validation
 
-### Option A: Scaffold a Brand New Multi-Version Plugin
+Scan existing C# or Python source files for common Revit API bugs, obsolete signatures, and threading issues:
+
 ```powershell
-pwsh ./cli/bim-ai.ps1 new -Name "MyCoolAddin" -TargetDir "C:\Projects"
+pwsh ./cli/bim-ai.ps1 validate -TargetDir "C:\Path\To\Your\Project"
 ```
 
-### Option B: Inject AI Rules into an Existing Plugin Repository
-```powershell
-pwsh ./cli/bim-ai.ps1 init -TargetDir "C:\MyExistingPlugin"
-```
-
-### Option C: Validate an Existing Codebase for Revit Anti-Patterns
-```powershell
-pwsh ./cli/bim-ai.ps1 validate -TargetDir "C:\MyExistingPlugin"
-```
+The validator detects:
+* Deprecated 32-bit `ElementId.IntegerValue` usage (enforcing 64-bit `ElementId.Value`).
+* Obsolete `ParameterType` and `DisplayUnitType` references (enforcing `ForgeTypeId`).
+* Threading violations (e.g., executing Revit API methods inside unmanaged `Task.Run()` calls).
 
 ---
 
-## 🧪 Testing and Building
+## Multi-AI Configuration Matrix
 
-Build the multi-version template across all supported versions:
-```bash
-# Build the entire solution:
-dotnet build templates/CleanRevitAddin/CleanRevitAddin.sln
-
-# Build specifically for Revit 2024 (.NET Framework 4.8):
-dotnet build -f net48 -c "Release R24"
-
-# Build specifically for Revit 2025 (.NET 8.0):
-dotnet build -f net8.0-windows -c "Release R25"
-
-# Build specifically for Revit 2026 (.NET 8.0):
-dotnet build -f net8.0-windows -c "Release R26"
-```
+| Tool | Integration Anchor | Behavior |
+| :--- | :--- | :--- |
+| **Cursor IDE** | `.cursor/rules/*.mdc` & `.cursorrules` | Automatically applies modular rules based on file context (`.cs`, `.py`, `.xaml`). |
+| **Claude Code** | `CLAUDE.md` | Loads master constraints and progressive disclosure skills on demand. |
+| **GitHub Copilot** | `.github/copilot-instructions.md` | Enforces STA threading and modern API conventions in completions and chat. |
+| **Windsurf IDE** | `.windsurfrules` | Guides Windsurf cascade workflows with Revit domain laws. |
+| **Codex / Universal**| `AGENTS.md` | Universal standard recognized across agentic coding platforms (AAIF specification). |
 
 ---
 
-## 🗺️ Roadmap & Platform Expansion
-- [x] Master AI instructions & progressive disclosure router
-- [x] Autodesk Revit 2024, 2025, 2026 (.NET 4.8 & .NET 8.0)
-- [x] Initial suite of 8 core Agent Skills
-- [x] Multi-targeting C# Clean Architecture template
-- [x] CLI installer and code validator
-- [ ] Autodesk Civil 3D support (AutoCAD/Civil 3D API skills & rules)
-- [ ] Autodesk Navisworks support (Clash & coordination add-in skills)
-- [ ] Tekla Structures Open API skills
-- [ ] OpenBIM / IFC code generation rules (Xbim, IfcOpenShell)
+## Technical Standards & Version Support
+
+| Autodesk Revit Version | Target Framework | Runtime Architecture | Notable API Considerations |
+| :--- | :--- | :--- | :--- |
+| **Revit 2024** | `net48` | .NET Framework 4.8 | `ElementId.Value` (Int64), introduction of `Toposolid`. |
+| **Revit 2025** | `net8.0-windows` | **.NET 8.0 (.NET Core)** | SDK-style project format required; `AssemblyLoadContext` isolation; new `FindParameter()` API. |
+| **Revit 2026** | `net8.0-windows` | **.NET 8.0 (.NET Core)** | Enhanced Toposolid geometry APIs; cloud collaboration endpoints. |
 
 ---
 
-## 🤝 Contributing
-Contributions are warmly welcomed! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for instructions on submitting new Agent Skills or enhancing the technical knowledge base.
+## Roadmap
 
-## 📄 License
-This project is licensed under the [MIT License](LICENSE).
+- [x] Master AI architecture and progressive skill router
+- [x] Autodesk Revit 2024, 2025, and 2026 multi-version compatibility
+- [x] C# Clean Architecture multi-target template (.NET 4.8 / .NET 8.0)
+- [x] pyRevit Python extension and Ribbon button scaffolding
+- [x] Automation CLI for installation, scaffolding, and validation
+- [ ] Autodesk Civil 3D API rules and alignment/corridor skills
+- [ ] Autodesk Navisworks clash and coordination plugin skills
+- [ ] Tekla Structures Open API integration
+- [ ] OpenBIM / IFC processing rules (IfcOpenShell & Xbim)
 
 ---
 
-## 🌐 Official Repository
-* **GitHub:** [https://github.com/AbhishekAbhishek1/BIM-AI-Foundation](https://github.com/AbhishekAbhishek1/BIM-AI-Foundation)
-* **Clone:** `git clone https://github.com/AbhishekAbhishek1/BIM-AI-Foundation.git`
+## Contributing
+
+Contributions are welcomed from the AEC software engineering community. Please review [CONTRIBUTING.md](CONTRIBUTING.md) for details on submitting new Agent Skills, expanding knowledge base documentation, or adding framework templates.
+
+---
+
+## License
+
+This repository is distributed under the terms of the [MIT License](LICENSE).
+
+---
+
+## Repository Access
+
+* **GitHub Repository:** [https://github.com/AbhishekAbhishek1/BIM-AI-Foundation](https://github.com/AbhishekAbhishek1/BIM-AI-Foundation)
+* **Clone:**
+  ```bash
+  git clone https://github.com/AbhishekAbhishek1/BIM-AI-Foundation.git
+  ```
