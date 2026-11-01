@@ -237,8 +237,8 @@ This repository is distributed under the terms of the [MIT License](LICENSE).
 
 ## Repository Access
 
-* **GitHub Repository:** [https://github.com/AbhishekAbhishek1/BIM-AI-Foundation](https://github.com/AbhishekAbhishek1/BIM-AI-Foundation)
+* **GitHub Repository:** [https://github.com/AbhishekAbhishek1/BIM-AI-Foundation](https://github.com/Abhishekaggarwal1/BIM-AI-Foundation)
 * **Clone:**
   ```bash
-  git clone https://github.com/AbhishekAbhishek1/BIM-AI-Foundation.git
+  git clone https://github.com/Abhishekaggarwal1/BIM-AI-Foundation.git
   ```
