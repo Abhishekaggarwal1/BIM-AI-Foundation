@@ -10,6 +10,8 @@ When fulfilling user requests, locate and read the corresponding skill file befo
 
 - **Creating or scaffolding a Revit C# plugin:** `skills/revit-plugin-scaffold/SKILL.md`
 - **Building pyRevit extensions or Python ribbon buttons:** `skills/revit-pyrevit-extension/SKILL.md`
+- **Authoring Revit Dynamo Python scripts or Zero-Touch nodes:** `skills/revit-dynamo-script/SKILL.md`
+- **Building AutoCAD .NET plugins (C#) or AutoLISP scripts:** `skills/autocad-plugin-scaffold/SKILL.md`
 - **Asynchronous, thread-safe, or background tasks:** `skills/revit-external-event/SKILL.md`
 - **Reading, writing, or creating parameters & units:** `skills/revit-parameter-manager/SKILL.md`
 - **FilteredElementCollector queries & performance:** `skills/revit-element-collector/SKILL.md`

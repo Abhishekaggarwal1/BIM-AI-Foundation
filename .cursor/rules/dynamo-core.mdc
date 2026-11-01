@@ -1,0 +1,17 @@
+---
+description: Core Revit Dynamo scripting rules, TransactionManager invariants, and UnwrapElement guidelines
+globs: **/*dynamo*,**/*Dynamo*,**/*.dyn
+alwaysApply: false
+---
+
+# Revit Dynamo Scripting Invariants
+
+1. **Transaction Lifecycle:**
+   * Never open native `Transaction(doc)` in Dynamo Python nodes.
+   * Always use `TransactionManager.Instance.EnsureInTransaction(doc)` and `TransactionManager.Instance.TransactionTaskDone()`.
+2. **Element Wrapping:**
+   * Dynamo wraps Revit elements. Always unwrap inputs: `UnwrapElement(IN[x])`.
+   * Convert back using `element.ToDSType(true)` before assigning to `OUT`.
+3. **Geometry Interop:**
+   * Dynamo to Revit: `dynamo_curve.ToRevitType()` or `dynamo_pt.ToXyz()`.
+   * Revit to Dynamo: `revit_curve.ToProtoType()` or `revit_xyz.ToPoint()`.

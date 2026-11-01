@@ -14,15 +14,18 @@ This repository provides a standardized foundation for developing Autodesk Revit
 ## Common Developer Commands
 - **Build Solution:** `dotnet build`
 - **Build Revit 2024 (.NET 4.8):** `dotnet build -f net48 -c "Release R24"`
-- **Build Revit 2025 (.NET 8):** `dotnet build -f net8.0-windows -c "Release R25"`
-- **Build Revit 2026 (.NET 8):** `dotnet build -f net8.0-windows -c "Release R26"`
+- **Build Revit 2025/2026 (.NET 8):** `dotnet build -f net8.0-windows -c "Release R25"`
+- **Build AutoCAD 2024 (.NET 4.8):** `dotnet build -f net48`
+- **Build AutoCAD 2025/2026 (.NET 8):** `dotnet build -f net8.0-windows`
 - **Test:** `dotnet test`
 - **CLI Tool:** `pwsh ./cli/bim-ai.ps1 [status|init|new|sync|validate]`
 
 ## Progressive Skill Retrieval
 When handling specific tasks, read the specialized skill file before writing code:
-- Plugin Scaffolding (C#): `skills/revit-plugin-scaffold/SKILL.md`
+- Revit Plugin Scaffolding (C#): `skills/revit-plugin-scaffold/SKILL.md`
 - pyRevit Extensions & Python: `skills/revit-pyrevit-extension/SKILL.md`
+- Revit Dynamo Python & Zero-Touch Nodes: `skills/revit-dynamo-script/SKILL.md`
+- AutoCAD .NET (C#) & AutoLISP: `skills/autocad-plugin-scaffold/SKILL.md`
 - Async & ExternalEvents: `skills/revit-external-event/SKILL.md`
 - Parameter & Unit Management: `skills/revit-parameter-manager/SKILL.md`
 - High-Performance Filtering: `skills/revit-element-collector/SKILL.md`

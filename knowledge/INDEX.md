@@ -18,10 +18,19 @@ Use this index to quickly locate specific technical documentation and examples. 
 | **Ribbon UI & Dockable Panels** | [`revit-api/ui-ribbon-dockable.md`](revit-api/ui-ribbon-dockable.md) | `RibbonPanel`, `PushButton`, `SplitButton`, `DockablePane`, `IDockablePaneProvider`, WPF MVVM |
 | **Extensible Storage** | [`revit-api/extensible-storage.md`](revit-api/extensible-storage.md) | `SchemaBuilder`, `FieldBuilder`, `Entity`, `DataStorage`, GUID management, access permissions |
 | **pyRevit & Python Patterns** | [`revit-api/pyrevit-patterns.md`](revit-api/pyrevit-patterns.md) | pyRevit extensions, `.pushbutton`, `bundle.yaml`, `forms` dialogs, IronPython & CPython 3 |
+| **Dynamo Python & Nodes** | [`revit-api/dynamo-python-patterns.md`](revit-api/dynamo-python-patterns.md) | Dynamo Python nodes, `RevitServices`, `TransactionManager`, `UnwrapElement`, geometry interop |
 
 ---
 
-## 2. Version Breaking Changes & Migration (`knowledge/versions/`)
+## 2. AutoCAD API Knowledge (`knowledge/autocad/`)
+
+| Topic | Document Path | Key Concepts Covered |
+| :--- | :--- | :--- |
+| **AutoCAD .NET & LISP** | [`autocad/autocad-api-architecture.md`](autocad/autocad-api-architecture.md) | `DocumentLock`, `TransactionManager`, `BlockTableRecord`, ModelSpace, `OpenMode`, AutoLISP |
+
+---
+
+## 3. Version Breaking Changes & Migration (`knowledge/versions/`)
 
 | Document Path | Description |
 | :--- | :--- |
@@ -32,7 +41,7 @@ Use this index to quickly locate specific technical documentation and examples. 
 
 ---
 
-## 3. Architecture & Patterns (`knowledge/architecture/`)
+## 4. Architecture & Patterns (`knowledge/architecture/`)
 
 | Document Path | Description |
 | :--- | :--- |

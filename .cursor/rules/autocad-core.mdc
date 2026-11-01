@@ -1,0 +1,16 @@
+---
+description: Core AutoCAD .NET and AutoLISP rules, DocumentLock invariants, and transaction lifecycles
+globs: **/*acad*,**/*AutoCAD*,**/*.lsp
+alwaysApply: false
+---
+
+# AutoCAD Engineering Invariants & Rules
+
+1. **STA Threading & Document Locking:**
+   * Modifying active drawings from modeless windows, WPF controls, or async callbacks REQUIRES `using (DocumentLock docLock = doc.LockDocument())`.
+2. **Database Transactions:**
+   * Access tables with `OpenMode.ForRead`. Open target `BlockTableRecord` (e.g., `ModelSpace`) with `OpenMode.ForWrite`.
+   * Newly instantiated entities must be registered: `btr.AppendEntity(entity); tr.AddNewlyCreatedDBObject(entity, true); tr.Commit();`.
+3. **Runtime Support:**
+   * AutoCAD 2024 targets `net48`.
+   * AutoCAD 2025 and 2026 target `net8.0-windows` (.NET 8 Coreclr).

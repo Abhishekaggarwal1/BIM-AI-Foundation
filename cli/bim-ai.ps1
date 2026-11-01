@@ -24,7 +24,7 @@ param(
     [string]$Name = "MyRevitPlugin",
 
     [Parameter()]
-    [ValidateSet("csharp", "pyrevit")]
+    [ValidateSet("csharp", "pyrevit", "dynamo", "autocad")]
     [string]$Type = "csharp",
 
     [Parameter()]
@@ -127,6 +127,45 @@ function Invoke-New {
         return
     }
 
+    if ($Type -eq "dynamo") {
+        Write-Host "[*] Scaffolding new Dynamo Scripts workspace '$Name' in: $dest" -ForegroundColor Cyan
+        $templatePath = "$RepoRoot\templates\DynamoScripts"
+        Copy-Item $templatePath -Destination $dest -Recurse -Force
+
+        # Inject AI Foundation rules into project
+        & $PSCommandPath init -TargetDir $dest
+
+        Write-Host "[OK] Dynamo Scripts workspace '$Name' scaffolded successfully!" -ForegroundColor Green
+        Write-Host "    Templates included: StandardDynamoPythonTemplate.py, BatchParameterSetter.py, RoomAuditScript.py" -ForegroundColor White
+        Write-Host "    Open '$dest' in Cursor or VS Code and start authoring Dynamo Python nodes." -ForegroundColor White
+        return
+    }
+
+    if ($Type -eq "autocad") {
+        Write-Host "[*] Scaffolding new AutoCAD .NET Add-in '$Name' in: $dest" -ForegroundColor Cyan
+        $templatePath = "$RepoRoot\templates\CleanAutoCADAddin"
+        Copy-Item $templatePath -Destination $dest -Recurse -Force
+
+        # Rename Solution and Project files
+        Rename-Item "$dest\CleanAutoCADAddin.sln" "$Name.sln"
+        Rename-Item "$dest\src\CleanAutoCADAddin\CleanAutoCADAddin.csproj" "$Name.csproj"
+        Rename-Item "$dest\src\CleanAutoCADAddin" "$Name"
+
+        # Replace namespace and project names in files
+        Get-ChildItem -Path $dest -Recurse -Include *.cs, *.csproj, *.xml, *.sln | ForEach-Object {
+            (Get-Content $_.FullName) -replace 'CleanAutoCADAddin', $Name | Set-Content $_.FullName
+        }
+
+        # Inject AI Foundation rules into project
+        & $PSCommandPath init -TargetDir $dest
+
+        Write-Host "[OK] AutoCAD Add-in '$Name' scaffolded successfully!" -ForegroundColor Green
+        Write-Host "    Solution: $dest\$Name.sln" -ForegroundColor White
+        Write-Host "    Multi-targets: net48 (AutoCAD 2024) and net8.0-windows (AutoCAD 2025/2026)" -ForegroundColor White
+        Write-Host "    Commands included: BIM_DRAWGRID, BIM_AUDITLAYERS" -ForegroundColor White
+        return
+    }
+
     Write-Host "[*] Scaffolding new Revit Add-in '$Name' in: $dest" -ForegroundColor Cyan
 
     # Copy template
@@ -186,6 +225,18 @@ function Invoke-Validate {
             # Check 4: Unsafe background thread execution (C# specific)
             if ($file.Extension -eq ".cs" -and $line -match 'Task\.Run\(' -and $line -match 'doc\.') {
                 Write-Host "  [CRITICAL] $($file.Name):$($lineNum) appears to call Revit API inside Task.Run(). Use RevitTask.RunAsync() instead!" -ForegroundColor Red
+                $issuesFound++
+            }
+
+            # Check 5: Dynamo TransactionManager violation
+            if ($file.FullName -match 'Dynamo' -and $line -match 'new Transaction\(') {
+                Write-Host "  [WARN] $($file.Name):$($lineNum) uses raw 'Transaction'. In Dynamo Python, use 'TransactionManager.Instance.EnsureInTransaction(doc)'." -ForegroundColor Yellow
+                $issuesFound++
+            }
+
+            # Check 6: AutoCAD STA threading violation
+            if ($file.Extension -eq ".cs" -and $line -match 'Task\.Run\(' -and $line -match 'db\.TransactionManager') {
+                Write-Host "  [CRITICAL] $($file.Name):$($lineNum) calls AutoCAD TransactionManager inside Task.Run(). AutoCAD requires STA and DocumentLock!" -ForegroundColor Red
                 $issuesFound++
             }
         }
