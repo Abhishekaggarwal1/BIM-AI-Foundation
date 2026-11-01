@@ -1,0 +1,35 @@
+name: BIM-AI-Foundation CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-and-build:
+    name: Validate Codebase & Build Templates
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+
+      - name: Run BIM-AI-Foundation Static API Validation
+        shell: pwsh
+        run: |
+          ./cli/bim-ai.ps1 validate
+
+      - name: Build Multi-Version Revit Addin Template
+        run: |
+          dotnet build templates/CleanRevitAddin/CleanRevitAddin.sln -c Release
+
+      - name: Build Multi-Version AutoCAD Addin Template
+        run: |
+          dotnet build templates/CleanAutoCADAddin/CleanAutoCADAddin.sln -c Release

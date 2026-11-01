@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Platforms>x64</Platforms>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <!-- Navisworks API Reference Hint -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+    <!-- When installed on dev machine, references Navisworks Manage API -->
+    <!-- <Reference Include="navisworks.gui.roamer"><HintPath>C:\Program Files\Autodesk\Navisworks Manage 2024\navisworks.gui.roamer.dll</HintPath><Private>False</Private></Reference> -->
+  </ItemGroup>
+
+</Project>

@@ -24,7 +24,7 @@ param(
     [string]$Name = "MyRevitPlugin",
 
     [Parameter()]
-    [ValidateSet("csharp", "pyrevit", "dynamo", "autocad")]
+    [ValidateSet("csharp", "pyrevit", "dynamo", "autocad", "navisworks", "openbim")]
     [string]$Type = "csharp",
 
     [Parameter()]
@@ -163,6 +163,42 @@ function Invoke-New {
         Write-Host "    Solution: $dest\$Name.sln" -ForegroundColor White
         Write-Host "    Multi-targets: net48 (AutoCAD 2024) and net8.0-windows (AutoCAD 2025/2026)" -ForegroundColor White
         Write-Host "    Commands included: BIM_DRAWGRID, BIM_AUDITLAYERS" -ForegroundColor White
+        return
+    }
+
+    if ($Type -eq "navisworks") {
+        Write-Host "[*] Scaffolding new Navisworks Add-in '$Name' in: $dest" -ForegroundColor Cyan
+        $templatePath = "$RepoRoot\templates\CleanNavisworksAddin"
+        Copy-Item $templatePath -Destination $dest -Recurse -Force
+
+        # Rename Project file
+        Rename-Item "$dest\CleanNavisworksAddin.csproj" "$Name.csproj"
+
+        # Replace namespace and project names in files
+        Get-ChildItem -Path $dest -Recurse -Include *.cs, *.csproj, *.xml | ForEach-Object {
+            (Get-Content $_.FullName) -replace 'CleanNavisworksAddin', $Name | Set-Content $_.FullName
+        }
+
+        # Inject AI Foundation rules into project
+        & $PSCommandPath init -TargetDir $dest
+
+        Write-Host "[OK] Navisworks Add-in '$Name' scaffolded successfully!" -ForegroundColor Green
+        Write-Host "    Project: $dest\$Name.csproj" -ForegroundColor White
+        Write-Host "    Ready for Clash Detective automation and custom plugins." -ForegroundColor White
+        return
+    }
+
+    if ($Type -eq "openbim") {
+        Write-Host "[*] Scaffolding new OpenBIM IFC Tools workspace '$Name' in: $dest" -ForegroundColor Cyan
+        $templatePath = "$RepoRoot\templates\OpenBimIfcTools"
+        Copy-Item $templatePath -Destination $dest -Recurse -Force
+
+        # Inject AI Foundation rules into project
+        & $PSCommandPath init -TargetDir $dest
+
+        Write-Host "[OK] OpenBIM IFC Tools workspace '$Name' scaffolded successfully!" -ForegroundColor Green
+        Write-Host "    Scripts included: audit_ifc_properties.py" -ForegroundColor White
+        Write-Host "    Ready for IfcOpenShell and buildingSMART IDS automation." -ForegroundColor White
         return
     }
 

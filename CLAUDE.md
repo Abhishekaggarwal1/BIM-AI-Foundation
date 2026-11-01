@@ -26,6 +26,14 @@ When handling specific tasks, read the specialized skill file before writing cod
 - pyRevit Extensions & Python: `skills/revit-pyrevit-extension/SKILL.md`
 - Revit Dynamo Python & Zero-Touch Nodes: `skills/revit-dynamo-script/SKILL.md`
 - AutoCAD .NET (C#) & AutoLISP: `skills/autocad-plugin-scaffold/SKILL.md`
+- Civil 3D Infrastructure (.NET): `skills/civil3d-plugin-scaffold/SKILL.md`
+- Navisworks Clash Detective & Add-ins: `skills/navisworks-plugin-scaffold/SKILL.md`
+- OpenBIM & IFC (IfcOpenShell & Xbim): `skills/openbim-ifc-processing/SKILL.md`
+- Rhino.Inside.Revit & Grasshopper: `skills/rhino-inside-revit/SKILL.md`
+- Automated Unit Testing (xUnitRevit): `skills/revit-unit-testing/SKILL.md`
+- BIM Collaboration Format (BCF): `skills/bim-bcf-manager/SKILL.md`
+- Revit Family (.rfa) Automation: `skills/revit-family-automator/SKILL.md`
+- APS (Forge) Design Automation: `skills/aps-design-automation/SKILL.md`
 - Async & ExternalEvents: `skills/revit-external-event/SKILL.md`
 - Parameter & Unit Management: `skills/revit-parameter-manager/SKILL.md`
 - High-Performance Filtering: `skills/revit-element-collector/SKILL.md`

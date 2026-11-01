@@ -2,24 +2,29 @@
 ### An Open-Source Engineering & Knowledge Framework for AI-Assisted BIM & CAD Software Development
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![CI/CD](https://github.com/AbhishekAbhishek1/BIM-AI-Foundation/actions/workflows/ci.yml/badge.svg)](https://github.com/AbhishekAbhishek1/BIM-AI-Foundation/actions)
 [![Autodesk Revit](https://img.shields.io/badge/Autodesk%20Revit-2024%20%7C%202025%20%7C%202026-blue.svg)](https://www.autodesk.com/products/revit)
 [![Autodesk AutoCAD](https://img.shields.io/badge/Autodesk%20AutoCAD-2024%20%7C%202025%20%7C%202026-red.svg)](https://www.autodesk.com/products/autocad)
-[![Revit Dynamo](https://img.shields.io/badge/Revit%20Dynamo-2.x%20%7C%203.x-lightgrey.svg)](https://dynamobim.org/)
+[![Navisworks](https://img.shields.io/badge/Autodesk%20Navisworks-2024%20%7C%202025%20%7C%202026-teal.svg)](https://www.autodesk.com/products/navisworks)
+[![Civil 3D](https://img.shields.io/badge/Autodesk%20Civil%203D-2024%20%7C%202025%20%7C%202026-darkgreen.svg)](https://www.autodesk.com/products/civil-3d)
+[![OpenBIM / IFC](https://img.shields.io/badge/OpenBIM-IFC2X3%20%7C%20IFC4%20%7C%20IFC4.3-gold.svg)](https://www.buildingsmart.org/)
+[![Dynamo & RiR](https://img.shields.io/badge/Computational-Dynamo%20%7C%20Rhino.Inside-green.svg)](https://dynamobim.org/)
 [![.NET Runtime](https://img.shields.io/badge/.NET-Framework%204.8%20%7C%208.0%20(Core)-purple.svg)](https://dotnet.microsoft.com/)
 [![pyRevit](https://img.shields.io/badge/pyRevit-4.8%2B%20(Python%202.7%20%2F%203.x)-orange.svg)](https://github.com/eirannejad/pyRevit)
-[![Standard](https://img.shields.io/badge/Standard-AGENTS.md%20%7C%20Agent%20Skills-green.svg)](https://agentskills.io)
+[![Standard](https://img.shields.io/badge/Standard-AGENTS.md%20%7C%20Agent%20Skills-brightgreen.svg)](https://agentskills.io)
 
 ---
 
 ## Executive Overview
 
-**BIM-AI-Foundation** is an open-source development and knowledge framework engineered to provide AI coding assistants (Claude Code, Cursor IDE, GitHub Copilot, OpenAI Codex, Windsurf, Antigravity) with authoritative domain intelligence for AEC software engineering across **Autodesk Revit**, **Revit Dynamo**, and **Autodesk AutoCAD**.
+**BIM-AI-Foundation** is an open-source development and knowledge framework engineered to provide AI coding assistants (Claude Code, Cursor IDE, GitHub Copilot, OpenAI Codex, Windsurf, Antigravity) with authoritative domain intelligence for AEC software engineering across **Autodesk Revit**, **AutoCAD**, **Navisworks**, **Civil 3D**, **Revit Dynamo**, **Rhino.Inside.Revit**, and **OpenBIM / IFC**.
 
 Developing tools for BIM and CAD platforms requires strict adherence to complex API invariants:
 - **Thread Safety:** Single-Threaded Apartment (STA) main UI thread isolation across Revit and AutoCAD.
 - **Database & Locking:** Scoped Revit transactions, Dynamo `TransactionManager`, and AutoCAD `DocumentLock` / `BlockTableRecord` lifecycles.
-- **Version Transitions:** The historic architectural migration from .NET Framework 4.8 (2024) to .NET 8.0 Core (2025/2026) across both Revit and AutoCAD.
+- **Version Transitions:** The historic architectural migration from .NET Framework 4.8 (2024) to .NET 8.0 Core (2025/2026) across Revit, AutoCAD, and Navisworks.
 - **Type Evolution:** 64-bit `ElementId.Value` (`long`) and `ForgeTypeId` parameter standards.
+- **Open Standards:** buildingSMART IFC4/4.3 schemas, IDS validation, and BCF issue exchange.
 
 Without specialized context, standard LLMs regularly generate code that triggers fatal application crashes, memory leaks, or compilation failures. **BIM-AI-Foundation** bridges this domain gap by providing structured rules, dynamic agent skills, and production templates that guide AI models to write correct, high-performance C#, Python, and AutoLISP code on the first attempt.
 
@@ -38,15 +43,16 @@ flowchart TD
 
     subgraph CoreEngine ["BIM-AI-Foundation Framework"]
         B1["Master Architectural Invariants<br/>(STA Threading, Transactions, DocumentLock)"]
-        B2["Breaking Changes Knowledge Base<br/>(Revit & AutoCAD 2024, 2025, 2026)"]
-        B3["Progressive Agent Skills Router<br/>(agentskills.io Standard)"]
+        B2["Breaking Changes Knowledge Base<br/>(2024 vs 2025 vs 2026)"]
+        B3["19 On-Demand Agent Skills<br/>(agentskills.io Standard)"]
     end
 
     subgraph Targets ["Development Targets"]
-        C1["Autodesk Revit C# Add-ins<br/>(Multi-targeted net48 & net8.0-windows)"]
-        C2["pyRevit Python Extensions<br/>(Ribbon Tabs, Panels & Pushbuttons)"]
-        C3["Revit Dynamo Scripts<br/>(Python Script Nodes & Zero-Touch C#)"]
-        C4["Autodesk AutoCAD Add-ins & LISP<br/>(.NET C# Commands, DocumentLock & AutoLISP)"]
+        C1["Autodesk Revit (C# & pyRevit)"]
+        C2["Autodesk AutoCAD & Civil 3D"]
+        C3["Autodesk Navisworks (Clash Detective)"]
+        C4["Revit Dynamo & Rhino.Inside.Revit"]
+        C5["OpenBIM & IFC (IfcOpenShell & Xbim)"]
     end
 
     MultiAI --> CoreEngine
@@ -54,65 +60,11 @@ flowchart TD
 ```
 
 * **Deterministic Architectural Guidance:** Eliminates LLM hallucinations around Revit & AutoCAD STA threading, transaction lifetimes, and document locking.
-* **Multi-Platform Support:** First-class engineering intelligence for **Revit C# Add-ins**, **pyRevit Python Extensions**, **Dynamo Computational Graphs**, and **AutoCAD .NET & AutoLISP**.
+* **Full AEC Platform Scope:** Intelligence for **Revit C# Add-ins**, **pyRevit Extensions**, **Dynamo Nodes**, **AutoCAD & Civil 3D .NET**, **Navisworks Clash Detective**, **Rhino.Inside.Revit**, and **OpenBIM / IFC**.
 * **Cross-Compilation (.NET 4.8 & .NET 8):** Unified project templates compiling natively for 2024 (.NET Framework 4.8) and 2025/2026 (.NET 8.0) from a single codebase.
-* **Progressive Disclosure Skills:** 11 modular agent skills adhering to the [agentskills.io](https://agentskills.io) standard, reducing AI context overhead by up to 90%.
-* **Developer Tooling CLI:** A cross-platform utility (`cli/bim-ai.ps1`) to scaffold add-ins, inject rules into existing projects, and statically validate codebases for Revit and AutoCAD API anti-patterns.
-
----
-
-## Repository Architecture
-
-```text
-BIM-AI-Foundation/
-├── AGENTS.md                          # Open-standard master AI rules (AAIF standard)
-├── CLAUDE.md                          # Claude Code CLI configuration
-├── .cursorrules                       # Cursor IDE root rules
-├── .windsurfrules                     # Windsurf IDE configuration
-├── .cursor/rules/                     # Modular Cursor rules (.mdc)
-│   ├── revit-core.mdc                 # Revit STA threading and transaction invariants
-│   ├── autocad-core.mdc               # AutoCAD DocumentLock and database transaction rules
-│   ├── dynamo-core.mdc                # Dynamo TransactionManager and element unwrapping
-│   ├── revit-versions.mdc             # Version-specific compilation (.NET 4.8 vs .NET 8)
-│   ├── revit-architecture.mdc         # Clean Architecture & MVVM design patterns
-│   └── bim-skills-router.mdc          # Dynamic skill dispatch router
-├── .github/copilot-instructions.md    # GitHub Copilot workspace instructions
-├── knowledge/                         # Technical knowledge repository
-│   ├── INDEX.md                       # High-density knowledge retrieval index
-│   ├── breaking-changes-matrix.md     # Comparative API matrix (2024 vs 2025 vs 2026)
-│   ├── revit-api/                     # Deep technical references (Threading, Geometry, pyRevit, Dynamo)
-│   ├── autocad/                       # AutoCAD .NET API architecture, DocumentLock & AutoLISP
-│   ├── versions/                      # Version-specific API guides (2024, 2025, 2026)
-│   └── architecture/                  # Clean Architecture, MVVM, and Dependency Injection
-├── skills/                            # On-demand Agent Skills (agentskills.io standard)
-│   ├── revit-plugin-scaffold/         # Multi-version Revit C# add-in scaffolding
-│   ├── revit-pyrevit-extension/       # pyRevit extensions, buttons (.pushbutton) & bundle.yaml
-│   ├── revit-dynamo-script/           # Dynamo Python nodes, TransactionManager & Zero-Touch C#
-│   ├── autocad-plugin-scaffold/       # AutoCAD .NET add-ins (C#), Commands & AutoLISP (.lsp)
-│   ├── revit-external-event/          # Async dispatching & RevitTask completion sources
-│   ├── revit-parameter-manager/       # ForgeTypeId, SpecTypeId & unit conversion
-│   ├── revit-element-collector/       # High-performance FilteredElementCollector recipes
-│   ├── revit-geometry-analysis/       # Solids, Boolean operations & ray casting
-│   ├── revit-failure-handler/         # Warning suppression & IFailuresPreprocessor
-│   ├── revit-model-validation/        # Model audits & QA/QC validation routines
-│   └── revit-dockable-panel/          # Custom dockable panels & WPF MVVM palettes
-├── templates/                         # Production-ready starting templates
-│   ├── CleanRevitAddin/               # Multi-version Revit C# solution (2024–2026)
-│   ├── CleanAutoCADAddin/             # Multi-version AutoCAD C# solution (2024–2026)
-│   ├── pyRevitExtension/              # Modular pyRevit extension bundle with pushbuttons
-│   └── DynamoScripts/                 # Defensive Dynamo Python node scripts
-├── cli/                               # Automation & developer CLI
-│   ├── bim-ai.ps1                     # PowerShell core CLI
-│   ├── bim-ai.sh                      # Unix/Bash wrapper
-│   └── bim-ai.cmd                     # Windows batch wrapper
-├── docs/                              # Framework documentation
-│   ├── ARCHITECTURE.md                # Structural system design
-│   ├── MULTI_AI_GUIDE.md              # Multi-AI editor configuration guide
-│   └── TOKEN_OPTIMIZATION.md          # Context token optimization benchmarks
-├── CONTRIBUTING.md                    # Contribution guidelines
-├── LICENSE                            # MIT License
-└── README.md                          # Repository documentation
-```
+* **Automated CI/CD Workflows:** Built-in GitHub Actions (`.github/workflows/ci.yml`) validating and compiling templates automatically.
+* **Progressive Disclosure Skills:** 19 modular agent skills adhering to the [agentskills.io](https://agentskills.io) standard, reducing AI context overhead by up to 90%.
+* **Developer Tooling CLI:** A cross-platform utility (`cli/bim-ai.ps1`) to scaffold add-ins, inject rules into existing projects, and statically validate codebases.
 
 ---
 
@@ -120,77 +72,70 @@ BIM-AI-Foundation/
 
 Agent skills provide AI assistants with procedural workflows, reusable source implementations, and API signatures on demand:
 
-| Skill | Primary Scope | Provided Assets |
+| Domain | Skill | Scope & Assets |
 | :--- | :--- | :--- |
-| **`revit-plugin-scaffold`** | Scaffolds multi-targeted Revit C# add-ins with SDK-style `.csproj`. | SDK `.csproj`, `.addin` manifest, multi-target build tasks. |
-| **`revit-pyrevit-extension`** | Creates pyRevit extensions, custom Ribbon buttons, and UI. | Folder hierarchy, `bundle.yaml`, `script.py` templates. |
-| **`revit-dynamo-script`** | Authors Dynamo Python nodes and Zero-Touch C# libraries. | `RevitServices`, `TransactionManager`, defensive list lacing. |
-| **`autocad-plugin-scaffold`** | Builds AutoCAD .NET plugins (C#) and AutoLISP routines. | `DocumentLock`, `BlockTableRecord`, Autoloader bundle. |
-| **`revit-external-event`** | Dispatches non-blocking async and WPF actions to Revit's STA thread. | `RevitTask.cs`, `ExternalEventWrapper.cs`. |
-| **`revit-parameter-manager`** | High-performance, type-safe parameter manipulation using `ForgeTypeId`. | `ParameterExtensions.cs`. |
-| **`revit-element-collector`** | Fast element filtering using native C++ quick filters. | `CollectorExtensions.cs`. |
-| **`revit-geometry-analysis`** | Solid geometry evaluation, boolean intersections, and ray casting. | `GeometryUtils.cs`. |
-| **`revit-failure-handler`** | Automatic warning suppression and transaction failure preprocessors. | `WarningSwallower.cs`, `FailureHandlers.cs`. |
-| **`revit-model-validation`** | Comprehensive model health checks and automated QA/QC routines. | `ModelValidator.cs`. |
-| **`revit-dockable-panel`** | Custom dockable panels and palettes with WPF MVVM. | `DockablePanelTemplate.xaml`, ViewModels. |
+| **Revit Core** | **`revit-plugin-scaffold`** | Scaffolds multi-targeted Revit C# add-ins with SDK-style `.csproj`. |
+| **Revit UI & Python**| **`revit-pyrevit-extension`** | Creates pyRevit extensions, custom Ribbon buttons, `bundle.yaml`, and forms. |
+| **Revit Dynamo** | **`revit-dynamo-script`** | Authors Dynamo Python nodes, `RevitServices` transactions, and Zero-Touch C#. |
+| **AutoCAD** | **`autocad-plugin-scaffold`** | Builds AutoCAD .NET plugins (C#), `DocumentLock`, and AutoLISP routines. |
+| **Civil 3D** | **`civil3d-plugin-scaffold`** | Queries `CivilDocument`, Alignments, Profiles, TIN Surfaces, and Corridors. |
+| **Navisworks** | **`navisworks-plugin-scaffold`**| Automates Navisworks Clash Detective tests, SelectionSets, and Viewpoints. |
+| **OpenBIM / IFC** | **`openbim-ifc-processing`** | Parses IFC files, extracts Psets/Qto, and validates IDS via `IfcOpenShell` & `Xbim`. |
+| **Computational** | **`rhino-inside-revit`** | Bridges RhinoCommon with Revit API, converting Breps to DirectShape in Grasshopper. |
+| **Testing** | **`revit-unit-testing`** | In-process and decoupled automated unit testing with `xUnitRevit` & TestRunner. |
+| **Coordination** | **`bim-bcf-manager`** | Generates BCF 2.1/3.0 XML and REST issues with 3D camera viewpoints. |
+| **Content** | **`revit-family-automator`** | Automates family documents (.rfa), `FamilyManager`, formulas, and parameters. |
+| **Cloud Automation** | **`aps-design-automation`** | Headless cloud Revit batch processing via Autodesk Platform Services (APS). |
+| **Async / UI** | **`revit-external-event`** | Non-blocking async and WPF dispatching via `RevitTask.cs`. |
+| **Data & Units** | **`revit-parameter-manager`** | Type-safe parameter manipulation using modern `ForgeTypeId`. |
+| **Filtering** | **`revit-element-collector`** | Fast element filtering using native C++ quick filters. |
+| **Geometry** | **`revit-geometry-analysis`** | Solid geometry evaluation, boolean intersections, and ray casting. |
+| **Failures** | **`revit-failure-handler`** | Automatic warning suppression and transaction failure preprocessors. |
+| **Auditing** | **`revit-model-validation`** | Comprehensive model health checks and automated QA/QC routines. |
+| **Dockable Panels** | **`revit-dockable-panel`** | Custom dockable panels and palettes with WPF MVVM. |
 
 ---
 
 ## Developer Quickstart
 
-### 1. Scaffolding a New Revit C# Add-in
+### 1. Scaffolding Projects via CLI
+
 ```powershell
-pwsh ./cli/bim-ai.ps1 new -Name "SmartClashAutomation" -Type "csharp" -TargetDir "C:\Projects"
-```
-Build across supported releases:
-```bash
-dotnet build -f net48 -c "Release R24"          # Revit 2024 (.NET Framework 4.8)
-dotnet build -f net8.0-windows -c "Release R25" # Revit 2025 (.NET 8.0)
-dotnet build -f net8.0-windows -c "Release R26" # Revit 2026 (.NET 8.0)
+# Revit C# Add-in (Revit 2024-2026)
+pwsh ./cli/bim-ai.ps1 new -Name "SmartClash" -Type "csharp"
+
+# pyRevit Python Extension
+pwsh ./cli/bim-ai.ps1 new -Name "CustomBimTools" -Type "pyrevit"
+
+# AutoCAD .NET Plugin (AutoCAD 2024-2026)
+pwsh ./cli/bim-ai.ps1 new -Name "AcadTools" -Type "autocad"
+
+# Navisworks Manage Add-in
+pwsh ./cli/bim-ai.ps1 new -Name "NavisAuditor" -Type "navisworks"
+
+# Dynamo Python Scripts Workspace
+pwsh ./cli/bim-ai.ps1 new -Name "DynamoScripts" -Type "dynamo"
+
+# OpenBIM IFC Tools Workspace
+pwsh ./cli/bim-ai.ps1 new -Name "IfcAutomation" -Type "openbim"
 ```
 
 ---
 
-### 2. Scaffolding a pyRevit Python Extension
-```powershell
-pwsh ./cli/bim-ai.ps1 new -Name "CustomBimTools" -Type "pyrevit" -TargetDir "C:\Projects"
-```
-Place in `%APPDATA%\pyRevit\Extensions\` or use `pyrevit extend ui CustomBimTools "C:\Projects"`, then click **Reload** in Revit.
+### 2. Static Codebase Validation
 
----
-
-### 3. Scaffolding an AutoCAD .NET Plugin (C# & AutoLISP)
-```powershell
-pwsh ./cli/bim-ai.ps1 new -Name "AcadCivilTools" -Type "autocad" -TargetDir "C:\Projects"
-```
-Build for your target AutoCAD version:
-```bash
-dotnet build -f net48           # AutoCAD 2024 (.NET Framework 4.8)
-dotnet build -f net8.0-windows  # AutoCAD 2025/2026 (.NET 8.0)
-```
-
----
-
-### 4. Scaffolding a Dynamo Python Workspace
-```powershell
-pwsh ./cli/bim-ai.ps1 new -Name "DynamoAutomation" -Type "dynamo" -TargetDir "C:\Projects"
-```
-Provides production-ready Dynamo Python node templates with defensive input unwrapping, `RevitServices` transactions, and geometry interop.
-
----
-
-### 5. Integrating with Existing Repositories
-Inject `BIM-AI-Foundation` rules and skills into any existing plugin, Dynamo, or AutoCAD workspace:
-```powershell
-pwsh ./cli/bim-ai.ps1 init -TargetDir "C:\Path\To\Your\ExistingProject"
-```
-
----
-
-### 6. Codebase Static Validation
 Scan C#, Python, and AutoLISP files for common API bugs, obsolete signatures, and threading issues:
 ```powershell
 pwsh ./cli/bim-ai.ps1 validate -TargetDir "C:\Path\To\Your\Project"
+```
+
+---
+
+### 3. Integrating with Existing Repositories
+
+Inject `BIM-AI-Foundation` rules and skills into any existing plugin, Dynamo, or CAD workspace:
+```powershell
+pwsh ./cli/bim-ai.ps1 init -TargetDir "C:\Path\To\Your\ExistingProject"
 ```
 
 ---
@@ -203,7 +148,10 @@ pwsh ./cli/bim-ai.ps1 validate -TargetDir "C:\Path\To\Your\Project"
 | **Autodesk Revit** | **2025 / 2026** | `net8.0-windows` | **.NET 8.0 Core**, SDK-style csproj, `AssemblyLoadContext` isolation. |
 | **Autodesk AutoCAD** | **2024** | `net48` | .NET Framework 4.8, `DocumentLock`, `BlockTableRecord`. |
 | **Autodesk AutoCAD** | **2025 / 2026** | `net8.0-windows` | **.NET 8.0 Core**, modernized graphics pipeline. |
+| **Autodesk Navisworks** | **2024–2026**| `net48` / `net8.0-windows` | `DocumentClash`, `ModelItem` selection tree, `AddInPlugin`. |
+| **Autodesk Civil 3D** | **2024–2026**| `net48` / `net8.0-windows` | `CivilDocument`, Alignments, Profiles, TIN Surfaces. |
 | **Revit Dynamo** | **2.x / 3.x** | CPython 3 / IronPython | `RevitServices.Transactions.TransactionManager`, `UnwrapElement`. |
+| **OpenBIM / IFC** | **2X3 / 4 / 4.3** | Python / .NET 8 | `IfcOpenShell`, `Xbim`, buildingSMART IDS schema compliance. |
 
 ---
 
@@ -215,11 +163,16 @@ pwsh ./cli/bim-ai.ps1 validate -TargetDir "C:\Path\To\Your\Project"
 - [x] pyRevit Python extension and Ribbon button scaffolding
 - [x] Autodesk Revit Dynamo Python node scripting and templates
 - [x] Autodesk AutoCAD .NET C# plugin scaffolding and AutoLISP rules
-- [x] Automation CLI for installation, multi-type scaffolding, and validation
-- [ ] Autodesk Civil 3D API rules and alignment/corridor skills
-- [ ] Autodesk Navisworks clash and coordination plugin skills
+- [x] Autodesk Navisworks Manage clash automation and add-in scaffolding
+- [x] Autodesk Civil 3D infrastructure API rules and alignment/corridor skills
+- [x] OpenBIM & IFC processing (IfcOpenShell & Xbim)
+- [x] Rhino.Inside.Revit & Grasshopper computational pipelines
+- [x] Automated Unit Testing skills (xUnitRevit & TestRunner)
+- [x] BIM Collaboration Format (BCF 2.1 & 3.0) issue manager
+- [x] Revit Family (.rfa) document & parameter automation
+- [x] APS (Forge) Design Automation for headless cloud Revit
+- [x] GitHub Actions automated CI/CD pipeline
 - [ ] Tekla Structures Open API integration
-- [ ] OpenBIM / IFC processing rules (IfcOpenShell & Xbim)
 
 ---
 
@@ -237,8 +190,8 @@ This repository is distributed under the terms of the [MIT License](LICENSE).
 
 ## Repository Access
 
-* **GitHub Repository:** [https://github.com/AbhishekAbhishek1/BIM-AI-Foundation](https://github.com/Abhishekaggarwal1/BIM-AI-Foundation)
+* **GitHub Repository:** [https://github.com/AbhishekAbhishek1/BIM-AI-Foundation](https://github.com/AbhishekAbhishek1/BIM-AI-Foundation)
 * **Clone:**
   ```bash
-  git clone https://github.com/Abhishekaggarwal1/BIM-AI-Foundation.git
+  git clone https://github.com/AbhishekAbhishek1/BIM-AI-Foundation.git
   ```

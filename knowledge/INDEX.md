@@ -22,11 +22,22 @@ Use this index to quickly locate specific technical documentation and examples. 
 
 ---
 
-## 2. AutoCAD API Knowledge (`knowledge/autocad/`)
+## 2. AutoCAD & Infrastructure Knowledge (`knowledge/autocad/` & `knowledge/civil3d/`)
 
 | Topic | Document Path | Key Concepts Covered |
 | :--- | :--- | :--- |
 | **AutoCAD .NET & LISP** | [`autocad/autocad-api-architecture.md`](autocad/autocad-api-architecture.md) | `DocumentLock`, `TransactionManager`, `BlockTableRecord`, ModelSpace, `OpenMode`, AutoLISP |
+| **Civil 3D Infrastructure** | [`civil3d/civil3d-api-architecture.md`](civil3d/civil3d-api-architecture.md) | `CivilDocument`, Alignments, Profiles, TIN Surfaces, Corridors, Station/Offset |
+
+---
+
+## 3. Coordination & OpenBIM Knowledge (`knowledge/navisworks/` & `knowledge/openbim/`)
+
+| Topic | Document Path | Key Concepts Covered |
+| :--- | :--- | :--- |
+| **Navisworks Clash & API** | [`navisworks/navisworks-api-architecture.md`](navisworks/navisworks-api-architecture.md) | `ClashTest`, `DocumentClash`, `ModelItem`, SelectionSets, Viewpoints |
+| **OpenBIM & IFC** | [`openbim/openbim-ifc-patterns.md`](openbim/openbim-ifc-patterns.md) | IfcOpenShell, Xbim, Pset/Qto extraction, IDS compliance validation |
+| **Rhino.Inside.Revit** | [`computational-design/rhino-inside-revit.md`](computational-design/rhino-inside-revit.md) | RhinoCommon to Revit interop, Brep conversion, Grasshopper pipelines |
 
 ---
 
