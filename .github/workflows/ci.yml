@@ -47,7 +47,6 @@ jobs:
           python-version: '3.11'
 
       - name: Validate Python Scripts Syntax
+        shell: pwsh
         run: |
-          python -m py_compile templates/DynamoScripts/*.py
-          python -m py_compile templates/OpenBimIfcTools/*.py
-          python -m py_compile templates/pyRevitExtension/MyExtension.extension/MyExtension.tab/Automation.panel/*/*.py
+          Get-ChildItem -Path templates -Recurse -Filter *.py | ForEach-Object { python -m py_compile $_.FullName }
