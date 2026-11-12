@@ -133,3 +133,4 @@ pwsh ./cli/bim-ai.ps1 validate -TargetDir "C:\Path\To\Your\Code"
 | `rhino-inside-revit` | RhinoCommon to Revit geometry conversion in Grasshopper. |
 | `bim-bcf-manager` | Reading and writing BCF 2.1/3.0 XML issue reports with 3D camera viewpoints. |
 | `aps-design-automation` | Headless batch processing via Autodesk Platform Services (Forge). |
+
