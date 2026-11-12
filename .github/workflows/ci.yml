@@ -29,7 +29,25 @@ jobs:
       - name: Build Multi-Version Revit Addin Template
         run: |
           dotnet build templates/CleanRevitAddin/CleanRevitAddin.sln -c Release
+          dotnet build templates/CleanRevitAddin/CleanRevitAddin.sln -c "Release R24"
+          dotnet build templates/CleanRevitAddin/CleanRevitAddin.sln -c "Release R25"
+          dotnet build templates/CleanRevitAddin/CleanRevitAddin.sln -c "Release R26"
 
       - name: Build Multi-Version AutoCAD Addin Template
         run: |
           dotnet build templates/CleanAutoCADAddin/CleanAutoCADAddin.sln -c Release
+
+      - name: Build Multi-Version Navisworks Addin Template
+        run: |
+          dotnet build templates/CleanNavisworksAddin/CleanNavisworksAddin.sln -c Release
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate Python Scripts Syntax
+        run: |
+          python -m py_compile templates/DynamoScripts/*.py
+          python -m py_compile templates/OpenBimIfcTools/*.py
+          python -m py_compile templates/pyRevitExtension/MyExtension.extension/MyExtension.tab/Automation.panel/*/*.py

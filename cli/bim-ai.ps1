@@ -67,6 +67,10 @@ function Invoke-Init {
     Show-Header
     Write-Host "[*] Initializing BIM-AI-Foundation in: $TargetDir" -ForegroundColor Cyan
 
+    if (-not (Test-Path $TargetDir)) {
+        New-Item -ItemType Directory -Path $TargetDir -Force | Out-Null
+    }
+
     # Copy AI instructions
     Copy-Item "$RepoRoot\AGENTS.md" -Destination "$TargetDir\AGENTS.md" -Force
     Copy-Item "$RepoRoot\CLAUDE.md" -Destination "$TargetDir\CLAUDE.md" -Force
@@ -171,11 +175,13 @@ function Invoke-New {
         $templatePath = "$RepoRoot\templates\CleanNavisworksAddin"
         Copy-Item $templatePath -Destination $dest -Recurse -Force
 
-        # Rename Project file
-        Rename-Item "$dest\CleanNavisworksAddin.csproj" "$Name.csproj"
+        # Rename Solution and Project files
+        Rename-Item "$dest\CleanNavisworksAddin.sln" "$Name.sln"
+        Rename-Item "$dest\src\CleanNavisworksAddin\CleanNavisworksAddin.csproj" "$Name.csproj"
+        Rename-Item "$dest\src\CleanNavisworksAddin" "$Name"
 
         # Replace namespace and project names in files
-        Get-ChildItem -Path $dest -Recurse -Include *.cs, *.csproj, *.xml | ForEach-Object {
+        Get-ChildItem -Path $dest -Recurse -Include *.cs, *.csproj, *.xml, *.sln | ForEach-Object {
             (Get-Content $_.FullName) -replace 'CleanNavisworksAddin', $Name | Set-Content $_.FullName
         }
 
@@ -183,7 +189,8 @@ function Invoke-New {
         & $PSCommandPath init -TargetDir $dest
 
         Write-Host "[OK] Navisworks Add-in '$Name' scaffolded successfully!" -ForegroundColor Green
-        Write-Host "    Project: $dest\$Name.csproj" -ForegroundColor White
+        Write-Host "    Solution: $dest\$Name.sln" -ForegroundColor White
+        Write-Host "    Project: $dest\src\$Name\$Name.csproj" -ForegroundColor White
         Write-Host "    Ready for Clash Detective automation and custom plugins." -ForegroundColor White
         return
     }

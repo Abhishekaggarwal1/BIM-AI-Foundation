@@ -2,7 +2,7 @@
 ### An Open-Source Engineering & Knowledge Framework for AI-Assisted BIM & CAD Software Development
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![CI/CD](https://github.com/AbhishekAbhishek1/BIM-AI-Foundation/actions/workflows/ci.yml/badge.svg)](https://github.com/AbhishekAbhishek1/BIM-AI-Foundation/actions)
+[![CI/CD](https://github.com/Abhishekaggarwal1/BIM-AI-Foundation/actions/workflows/ci.yml/badge.svg)](https://github.com/Abhishekaggarwal1/BIM-AI-Foundation/actions)
 [![Autodesk Revit](https://img.shields.io/badge/Autodesk%20Revit-2024%20%7C%202025%20%7C%202026-blue.svg)](https://www.autodesk.com/products/revit)
 [![Autodesk AutoCAD](https://img.shields.io/badge/Autodesk%20AutoCAD-2024%20%7C%202025%20%7C%202026-red.svg)](https://www.autodesk.com/products/autocad)
 [![Navisworks](https://img.shields.io/badge/Autodesk%20Navisworks-2024%20%7C%202025%20%7C%202026-teal.svg)](https://www.autodesk.com/products/navisworks)
@@ -100,6 +100,8 @@ Agent skills provide AI assistants with procedural workflows, reusable source im
 
 ### 1. Scaffolding Projects via CLI
 
+You can run commands using PowerShell 7 (`pwsh`), Windows PowerShell (`powershell -ExecutionPolicy Bypass -File`), or CMD (`cli\bim-ai.cmd`):
+
 ```powershell
 # Revit C# Add-in (Revit 2024-2026)
 pwsh ./cli/bim-ai.ps1 new -Name "SmartClash" -Type "csharp"
@@ -110,7 +112,7 @@ pwsh ./cli/bim-ai.ps1 new -Name "CustomBimTools" -Type "pyrevit"
 # AutoCAD .NET Plugin (AutoCAD 2024-2026)
 pwsh ./cli/bim-ai.ps1 new -Name "AcadTools" -Type "autocad"
 
-# Navisworks Manage Add-in
+# Navisworks Manage Add-in (Navisworks 2024-2026)
 pwsh ./cli/bim-ai.ps1 new -Name "NavisAuditor" -Type "navisworks"
 
 # Dynamo Python Scripts Workspace
@@ -118,6 +120,9 @@ pwsh ./cli/bim-ai.ps1 new -Name "DynamoScripts" -Type "dynamo"
 
 # OpenBIM IFC Tools Workspace
 pwsh ./cli/bim-ai.ps1 new -Name "IfcAutomation" -Type "openbim"
+
+# (Windows CMD / PowerShell 5.1 alternative)
+# .\cli\bim-ai.cmd new -Name "SmartClash" -Type "csharp"
 ```
 
 ---
@@ -190,8 +195,8 @@ This repository is distributed under the terms of the [MIT License](LICENSE).
 
 ## Repository Access
 
-* **GitHub Repository:** [https://github.com/AbhishekAbhishek1/BIM-AI-Foundation](https://github.com/AbhishekAbhishek1/BIM-AI-Foundation)
+* **GitHub Repository:** [https://github.com/Abhishekaggarwal1/BIM-AI-Foundation](https://github.com/Abhishekaggarwal1/BIM-AI-Foundation)
 * **Clone:**
   ```bash
-  git clone https://github.com/AbhishekAbhishek1/BIM-AI-Foundation.git
+  git clone https://github.com/Abhishekaggarwal1/BIM-AI-Foundation.git
   ```
